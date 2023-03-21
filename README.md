@@ -1,1 +1,1 @@
-# capgemini-course-java
+# Capgemini Java Course
