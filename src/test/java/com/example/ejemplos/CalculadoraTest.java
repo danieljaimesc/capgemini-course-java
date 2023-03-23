@@ -1,6 +1,7 @@
 package com.example.ejemplos;
 
-import com.example.test.Smoke;
+import com.example.core.test.Smoke;
+import com.example.core.test.SpaceCamelCase;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -20,7 +21,7 @@ public class CalculadoraTest {
 
     @Nested
     @DisplayName("Method Sum Test")
-    @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+    @DisplayNameGeneration(SpaceCamelCase.class)
     class Suma {
         @Nested
         class OK {
