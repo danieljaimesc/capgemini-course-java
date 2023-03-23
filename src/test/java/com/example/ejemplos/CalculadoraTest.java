@@ -46,4 +46,13 @@ public class CalculadoraTest {
         var rslt = calc.suma(0.2, 0.3);
         assertEquals(0.5, rslt);
     }
+
+    @Test
+    void testDividirPorCero() {
+        var calc = new Calculadora();
+
+        var rslt = calc.divide(1, 0.0);
+
+        assertEquals(Double.POSITIVE_INFINITY, rslt);
+    }
 }
