@@ -1,11 +1,13 @@
 package com.example.ejemplos;
 
+import com.example.test.Smoke;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class CalculadoraTest {
     private Calculadora calc;
@@ -22,6 +24,7 @@ public class CalculadoraTest {
     class Suma {
         @Nested
         class OK {
+            @Smoke
             @Test
             void test_Suma() {
                 var rslt = calc.suma(2, 2);
