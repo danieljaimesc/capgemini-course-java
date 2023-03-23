@@ -27,31 +27,31 @@ public class CalculadoraTest {
         class OK {
             @Smoke
             @Test
-            void test_Suma() {
+            void testSuma() {
                 var rslt = calc.suma(2, 2);
                 assertEquals(4, rslt);
             }
 
             @Test
-            void test_Suma_Positivo_Negativo() {
+            void testSumaPositivoNegativo() {
                 var rslt = calc.suma(3, -1);
                 assertEquals(2, rslt);
             }
 
             @Test
-            void test_Suma_Negativo_Positivo() {
+            void testSumaNegativoPositivo() {
                 var rslt = calc.suma(-3, 3);
                 assertEquals(-0, rslt);
             }
 
             @Test
-            void test_Suma_Negativo_Negativo() {
+            void testSumaNegativoNegativo() {
                 var rslt = calc.suma(-4, -3);
                 assertEquals(-7, rslt);
             }
 
             @Test
-            void test_Suma_Decimal() {
+            void testSumaDecimal() {
                 var rslt = calc.suma(0.2, 0.3);
                 assertEquals(0.5, rslt);
             }
@@ -68,7 +68,7 @@ public class CalculadoraTest {
 
             @ParameterizedTest(name = "{1} + {2} = {3}")
             @CsvSource(value = {"1, 2, 3", "0.2, 0.2, 0.4", "0, 0, 0", "-1, 1, 0", "-1, -2, -3"})
-            void testSumaOK(double op1, double op2, double rslt) {
+            void testSumaOk(double op1, double op2, double rslt) {
                 assertEquals(rslt, calc.suma(op1, op2));
             }
         }
