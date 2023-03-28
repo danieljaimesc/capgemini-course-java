@@ -1,6 +1,8 @@
 package com.example.ejemplos;
 
+import com.example.ioc.PersonaRepository;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +14,7 @@ class PersonaTest {
 
     @Nested
     @DisplayName("Method Constructor Test")
-    public class Constructor {
+    public class ConstructorTest {
 
         @Nested
         public class OK {
@@ -42,6 +44,23 @@ class PersonaTest {
 
         @Nested
         public class KO {
+
+        }
+    }
+
+    @Nested
+    class PersonaRepositoryTest {
+        @Mock
+        PersonaRepository dao;
+
+        @Test
+        void testLoad() {
+
+            //when(dao.load()).thenReturn(Persona.builder().id(1).nombre("Daniel").apellidos("Jaimes").build());
+
+            //var p = dao.load();
+
+            //assertTrue(p instanceof Persona);
 
         }
     }

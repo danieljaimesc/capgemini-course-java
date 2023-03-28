@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 
 public class CalculadoraTest {
@@ -70,6 +71,12 @@ public class CalculadoraTest {
             @CsvSource(value = {"1, 2, 3", "0.2, 0.2, 0.4", "0, 0, 0", "-1, 1, 0", "-1, -2, -3"})
             void testSumaOk(double op1, double op2, double rslt) {
                 assertEquals(rslt, calc.suma(op1, op2));
+            }
+
+            @Test
+            void testSumaMockeable() {
+                Calculadora calc = mock(Calculadora.class);
+
             }
         }
 
