@@ -1,0 +1,3 @@
+[submodule "SpringSakilaInventory"]
+	path = SpringSakilaInventory
+	url = https://github.com/danieljaimesc/InventorySpringSakila.git
