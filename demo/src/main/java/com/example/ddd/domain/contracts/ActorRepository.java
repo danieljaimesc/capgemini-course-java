@@ -1,17 +1,18 @@
 package com.example.ddd.domain.contracts;
 
 import com.example.ddd.domain.entities.Actor;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface ActorRepository extends CrudRepository<Actor, Integer> {
+public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
     @Override
     Actor save(Actor entity);
 
     @Override
-    <S extends Actor> Iterable<S> saveAll(Iterable<S> entities);
+    <S extends Actor> List<S> saveAll(Iterable<S> entities);
 
     @Override
     Optional<Actor> findById(Integer integer);
@@ -20,10 +21,10 @@ public interface ActorRepository extends CrudRepository<Actor, Integer> {
     boolean existsById(Integer integer);
 
     @Override
-    Iterable<Actor> findAll();
+    List<Actor> findAll();
 
     @Override
-    Iterable<Actor> findAllById(Iterable<Integer> integers);
+    List<Actor> findAllById(Iterable<Integer> integers);
 
     @Override
     long count();
