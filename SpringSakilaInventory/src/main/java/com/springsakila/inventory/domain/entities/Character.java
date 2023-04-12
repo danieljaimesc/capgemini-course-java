@@ -125,4 +125,17 @@ public class Character extends EntityBase<Character> implements Serializable {
         Character other = (Character) obj;
         return characterId == other.characterId;
     }
+
+    public Character merge(Character target) {
+        target.firstName = firstName;
+        target.lastName = lastName;
+        //Remove filmsCharacter there are not need
+        target.filmCharacters.stream().filter(item -> !getFilmCharacters().contains(item))
+                .forEach(target::removeFilmCharacter);
+        //Add missing filmCharacters
+        getFilmCharacters().stream()
+                .filter(item -> !target.getFilmCharacters().contains(item))
+                .forEach(target::addFilmCharacter);
+        return target;
+    }
 }

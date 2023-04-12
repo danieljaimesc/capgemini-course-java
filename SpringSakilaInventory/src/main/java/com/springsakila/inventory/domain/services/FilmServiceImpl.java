@@ -6,6 +6,7 @@ import com.springsakila.inventory.domain.entities.Film;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,11 +41,13 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    @Transactional
     public Film modify(Film item) throws NotFoundException, InvalidDataException {
         if (item == null) throw new InvalidDataException(InvalidDataException.CANT_BE_NULL);
         if (item.isInvalid()) throw new InvalidDataException(item.getErrorsMessage());
-        if (dao.existsById(item.getFilmId())) throw new NotFoundException();
-        return dao.save(item);
+        var film = dao.findById(item.getFilmId());
+        if (film.isEmpty()) throw new NotFoundException();
+        return dao.save(item.merge(film.get()));
     }
 
     @Override

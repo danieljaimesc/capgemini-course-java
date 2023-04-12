@@ -69,8 +69,9 @@ public class CharacterServiceImpl implements CharacterService {
     public Character modify(Character item) throws NotFoundException, InvalidDataException {
         if (item == null) throw new InvalidDataException(InvalidDataException.CANT_BE_NULL);
         if (item.isInvalid()) throw new InvalidDataException(item.getErrorsMessage());
-        if (!dao.existsById(item.getCharacterId())) throw new NotFoundException();
-        return dao.save(item);
+        var character = dao.findById(item.getCharacterId());
+        if (character.isEmpty()) throw new NotFoundException();
+        return dao.save(item.merge(character.get()));
     }
 
     @Override
