@@ -7,6 +7,7 @@ import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class LanguageController {
     }
 
     @PostMapping("/language")
-    public Language postCreate(@RequestBody Language language) throws InvalidDataException, BadRequestException,
+    public Language postCreate(@Valid @RequestBody Language language) throws InvalidDataException, BadRequestException,
             NotFoundException, DuplicateKeyException {
         Language languageResult;
         if (languageService.getOne(language.getLanguageId()).isPresent())
@@ -37,7 +38,7 @@ public class LanguageController {
     }
 
     @PatchMapping("/language/{id}")
-    public Language update(@PathVariable int id, @RequestBody Language language) throws BadRequestException,
+    public Language update(@PathVariable int id, @Valid @RequestBody Language language) throws BadRequestException,
             InvalidDataException, NotFoundException {
         if (id != language.getLanguageId()) throw new BadRequestException("Identifiers do not match");
         return languageService.modify(language);

@@ -9,6 +9,7 @@ import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class FilmController {
 
     //Create record if not exist and if exist update it
     @PostMapping
-    public FilmDTO postCreate(@RequestBody FilmDTO filmDTO) throws InvalidDataException, BadRequestException,
+    public FilmDTO postCreate(@Valid @RequestBody FilmDTO filmDTO) throws InvalidDataException, BadRequestException,
             NotFoundException, DuplicateKeyException {
         FilmDTO filmResult;
         if (filmService.getOne(filmDTO.getFilmId()).isPresent()) filmResult = update(filmDTO.getFilmId(), filmDTO);
@@ -39,7 +40,7 @@ public class FilmController {
     }
 
     @PatchMapping("/{id}")
-    public FilmDTO update(@PathVariable int id, @RequestBody FilmDTO filmDTO) throws BadRequestException,
+    public FilmDTO update(@PathVariable int id, @Valid @RequestBody FilmDTO filmDTO) throws BadRequestException,
             InvalidDataException, NotFoundException {
         if (id != filmDTO.getFilmId()) throw new BadRequestException("Identifiers do not match");
         return FilmDTO.from(filmService.modify(FilmDTO.from(filmDTO)));

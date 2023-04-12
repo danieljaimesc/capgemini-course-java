@@ -8,6 +8,7 @@ import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class CharacterController {
 
     //Create record if not exist and if exist update it
     @PostMapping()
-    public CharacterDTO postCreate(@RequestBody CharacterDTO characterDTO) throws InvalidDataException,
+    public CharacterDTO postCreate(@Valid @RequestBody CharacterDTO characterDTO) throws InvalidDataException,
             DuplicateKeyException, BadRequestException, NotFoundException {
         CharacterDTO characterResult;
         if (characterService.getOne(characterDTO.getCharacterId()).isPresent())
@@ -40,7 +41,7 @@ public class CharacterController {
     }
 
     @PatchMapping("/{id}")
-    public CharacterDTO update(@PathVariable int id, @RequestBody CharacterDTO characterDTO) throws BadRequestException,
+    public CharacterDTO update(@PathVariable int id, @Valid @RequestBody CharacterDTO characterDTO) throws BadRequestException,
             InvalidDataException, NotFoundException {
         if (id != characterDTO.getCharacterId()) throw new BadRequestException("Identifiers do not match");
         return CharacterDTO.from(characterService.modify(CharacterDTO.from(characterDTO)));

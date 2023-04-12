@@ -7,6 +7,7 @@ import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,8 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public Category postCreate(@RequestBody Category category) throws InvalidDataException, DuplicateKeyException,
+    public Category postCreate(@Valid @RequestBody Category category) throws InvalidDataException,
+            DuplicateKeyException,
             BadRequestException, NotFoundException {
         Category categoryResult;
         if (categoryService.getOne(category.getCategoryId()).isPresent())
@@ -38,7 +40,7 @@ public class CategoryController {
     }
 
     @PatchMapping("/category/{id}")
-    public Category update(@PathVariable int id, @RequestBody Category category) throws BadRequestException,
+    public Category update(@PathVariable int id, @Valid @RequestBody Category category) throws BadRequestException,
             InvalidDataException, NotFoundException {
         if (id != category.getCategoryId()) throw new BadRequestException("Identifiers do not match");
         return categoryService.modify(category);
