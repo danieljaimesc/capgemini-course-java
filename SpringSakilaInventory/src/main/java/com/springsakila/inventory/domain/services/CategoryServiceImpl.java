@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     CategoryRepository dao;

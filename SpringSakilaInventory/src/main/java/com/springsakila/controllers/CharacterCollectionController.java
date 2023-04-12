@@ -1,7 +1,6 @@
 package com.springsakila.controllers;
 
-import com.springsakila.inventory.domain.entities.Character;
-import com.springsakila.inventory.domain.services.CharacterServiceImpl;
+import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/characters")
 public class CharacterCollectionController {
     @Autowired
-    private CharacterServiceImpl characterService;
+    private CharacterService characterService;
 
     @GetMapping
     public List<CharacterDTO> getAll(@RequestParam(required = false) String sort) {

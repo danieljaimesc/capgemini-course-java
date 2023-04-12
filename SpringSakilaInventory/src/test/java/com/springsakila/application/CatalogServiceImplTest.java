@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class CatalogServiceTest {
+class CatalogServiceImplTest {
     @Autowired
     private CatalogService catalogService;
 

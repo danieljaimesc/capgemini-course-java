@@ -1,8 +1,8 @@
 package com.springsakila.controllers;
 
+import com.springsakila.inventory.domain.contracts.services.FilmService;
 import com.springsakila.inventory.domain.entities.Category;
 import com.springsakila.inventory.domain.entities.Film;
-import com.springsakila.inventory.domain.services.FilmServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.shared.exceptions.BadRequestException;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/film")
 public class FilmController {
     @Autowired
-    private FilmServiceImpl filmService;
+    private FilmService filmService;
 
     @GetMapping("/{id}")
     public FilmDetailsDTO get(@PathVariable int id) throws NotFoundException {
@@ -35,7 +35,7 @@ public class FilmController {
     @ResponseStatus(HttpStatus.CREATED)
     public FilmDetailsDTO postCreate(@Valid @RequestBody FilmDetailsDTO filmDetailsDTO) throws InvalidDataException,
             DuplicateKeyException {
-        return  FilmDetailsDTO.from(filmService.add(FilmDetailsDTO.from(filmDetailsDTO)));
+        return FilmDetailsDTO.from(filmService.add(FilmDetailsDTO.from(filmDetailsDTO)));
     }
 
     @PatchMapping("/{id}")

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FilmServiceImpl implements FilmService {
+class FilmServiceImpl implements FilmService {
     @Autowired
     FilmRepository dao;
 

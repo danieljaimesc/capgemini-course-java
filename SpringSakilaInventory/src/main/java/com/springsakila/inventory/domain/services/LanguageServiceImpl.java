@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LanguageServiceImpl implements LanguageService {
+class LanguageServiceImpl implements LanguageService {
 
     @Autowired
     LanguageRepository dao;

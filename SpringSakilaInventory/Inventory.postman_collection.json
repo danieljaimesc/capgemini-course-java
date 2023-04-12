@@ -1,0 +1,974 @@
+{
+	"info": {
+		"_postman_id": "c513c6bb-3372-4909-9fe6-34ade83c1255",
+		"name": "Inventory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26770451"
+	},
+	"item": [
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "News Without Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL Base}}{{Catalog}}",
+							"host": [
+								"{{URL Base}}{{Catalog}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "News With Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL Base}}{{Catalog}}?date=2006-01-01 00:00:00",
+							"host": [
+								"{{URL Base}}{{Catalog}}"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2006-01-01 00:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Character",
+			"item": [
+				{
+					"name": "One",
+					"item": [
+						{
+							"name": "Create One Character",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"DANIEL\",\r\n    \"lastName\": \"JAIMES\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL Base}}{{Character}}",
+									"host": [
+										"{{URL Base}}{{Character}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit One Character By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"MOISES\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL Base}}{{Character}}/201",
+									"host": [
+										"{{URL Base}}{{Character}}"
+									],
+									"path": [
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete One Character By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Character}}/201",
+									"host": [
+										"{{URL Base}}{{Character}}"
+									],
+									"path": [
+										"201"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get One Character By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Character}}/1",
+									"host": [
+										"{{URL Base}}{{Character}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Collection Character Films By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Character}}/1{{Film Collection}}",
+									"host": [
+										"{{URL Base}}{{Character}}"
+									],
+									"path": [
+										"1{{Film Collection}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Collection",
+					"item": [
+						{
+							"name": "Get Collection Characters",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Character Collection}}",
+									"host": [
+										"{{URL Base}}{{Character Collection}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Collection Characters Sort & Page",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Character Collection}}?sort=firstName&page=0",
+									"host": [
+										"{{URL Base}}{{Character Collection}}"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "firstName"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Film",
+			"item": [
+				{
+					"name": "One",
+					"item": [
+						{
+							"name": "Create One Film",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film}}",
+									"host": [
+										"{{URL Base}}{{Film}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit One Film By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film}}/1001",
+									"host": [
+										"{{URL Base}}{{Film}}"
+									],
+									"path": [
+										"1001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete One Film By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film}}/1001",
+									"host": [
+										"{{URL Base}}{{Film}}"
+									],
+									"path": [
+										"1001"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get One Film By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film}}/1",
+									"host": [
+										"{{URL Base}}{{Film}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film Collection of Characters By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film}}/1{{Character Collection}}",
+									"host": [
+										"{{URL Base}}{{Film}}"
+									],
+									"path": [
+										"1{{Character Collection}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film Collection of Categories By Id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film}}/1{{Category Collection}}",
+									"host": [
+										"{{URL Base}}{{Film}}"
+									],
+									"path": [
+										"1{{Category Collection}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Collection",
+					"item": [
+						{
+							"name": "Get Film Short Collection",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film Collection}}?sort=title",
+									"host": [
+										"{{URL Base}}{{Film Collection}}"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "title"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Film Details Collection",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL Base}}{{Film Collection}}?mode=details",
+									"host": [
+										"{{URL Base}}{{Film Collection}}"
+									],
+									"query": [
+										{
+											"key": "mode",
+											"value": "details"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get One Category By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Category}}/1",
+							"host": [
+								"{{URL Base}}{{Category}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Category Collection}}",
+							"host": [
+								"{{URL Base}}{{Category Collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Film Short Collection of Category By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Category}}/1{{Film Collection}}",
+							"host": [
+								"{{URL Base}}{{Category}}"
+							],
+							"path": [
+								"1{{Film Collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Film Details Collection of Category By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Category}}/1{{Film Collection}}?mode=details",
+							"host": [
+								"{{URL Base}}{{Category}}"
+							],
+							"path": [
+								"1{{Film Collection}}"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "details"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Language",
+			"item": [
+				{
+					"name": "Get One Language By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Language}}/1",
+							"host": [
+								"{{URL Base}}{{Language}}"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create One Language",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Spanish\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL Base}}{{Language}}",
+							"host": [
+								"{{URL Base}}{{Language}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Language Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Language Collection}}",
+							"host": [
+								"{{URL Base}}{{Language Collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Film Short Collection of Language By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Language}}/1{{Film Collection}}",
+							"host": [
+								"{{URL Base}}{{Language}}"
+							],
+							"path": [
+								"1{{Film Collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Film Details Collection of Language By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"La solicitud ha tenido éxito.\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL Base}}{{Language}}/1{{Film Collection}}?mode=details",
+							"host": [
+								"{{URL Base}}{{Language}}"
+							],
+							"path": [
+								"1{{Film Collection}}"
+							],
+							"query": [
+								{
+									"key": "mode",
+									"value": "details"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resources",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlTemplate}}",
+					"host": [
+						"{{urlTemplate}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL Base",
+			"value": "http://localhost:8001/api/v1"
+		},
+		{
+			"key": "Catalog",
+			"value": "/catalog",
+			"type": "string"
+		},
+		{
+			"key": "Character",
+			"value": "/character",
+			"type": "string"
+		},
+		{
+			"key": "Character Collection",
+			"value": "/characters",
+			"type": "string"
+		},
+		{
+			"key": "Film",
+			"value": "/film",
+			"type": "string"
+		},
+		{
+			"key": "Film Collection",
+			"value": "/films",
+			"type": "string"
+		},
+		{
+			"key": "Category",
+			"value": "/category",
+			"type": "string"
+		},
+		{
+			"key": "Category Collection",
+			"value": "/categories",
+			"type": "string"
+		},
+		{
+			"key": "Language",
+			"value": "/language",
+			"type": "string"
+		},
+		{
+			"key": "Language Collection",
+			"value": "/languages",
+			"type": "string"
+		},
+		{
+			"key": "urlTemplate",
+			"value": "http://localhost:8001",
+			"type": "string"
+		}
+	]
+}

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CharacterServiceImpl implements CharacterService {
+class CharacterServiceImpl implements CharacterService {
     @Autowired
     CharacterRepository dao;
 

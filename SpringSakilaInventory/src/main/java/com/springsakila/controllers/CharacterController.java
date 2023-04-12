@@ -1,7 +1,7 @@
 package com.springsakila.controllers;
 
+import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.domain.entities.Character;
-import com.springsakila.inventory.domain.services.CharacterServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
 import com.springsakila.inventory.shared.exceptions.BadRequestException;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/character")
 public class CharacterController {
     @Autowired
-    private CharacterServiceImpl characterService;
+    private CharacterService characterService;
 
     @GetMapping("/{id}")
     public CharacterDTO get(@PathVariable int id) throws NotFoundException {

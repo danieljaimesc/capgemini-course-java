@@ -1,7 +1,7 @@
 package com.springsakila.controllers;
 
+import com.springsakila.inventory.domain.contracts.services.LanguageService;
 import com.springsakila.inventory.domain.entities.Language;
-import com.springsakila.inventory.domain.services.LanguageServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
 import com.springsakila.inventory.shared.PaginationConverter;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1")
 public class LanguageController {
     @Autowired
-    private LanguageServiceImpl languageService;
+    private LanguageService languageService;
 
     @GetMapping("/language/{id}")
     public Language get(@PathVariable int id) throws NotFoundException {

@@ -1,6 +1,6 @@
 package com.springsakila.controllers;
 
-import com.springsakila.inventory.domain.services.FilmServiceImpl;
+import com.springsakila.inventory.domain.contracts.services.FilmService;
 import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
 import com.springsakila.inventory.shared.PaginationConverter;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/v1/films")
 public class FilmCollectionController {
     @Autowired
-    private FilmServiceImpl filmService;
+    private FilmService filmService;
 
     @GetMapping
     public Page<FilmShortDTO> getAll(Pageable pageable, @RequestParam(defaultValue = "short") String mode) {

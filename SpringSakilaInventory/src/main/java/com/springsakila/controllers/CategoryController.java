@@ -1,7 +1,7 @@
 package com.springsakila.controllers;
 
+import com.springsakila.inventory.domain.contracts.services.CategoryService;
 import com.springsakila.inventory.domain.entities.Category;
-import com.springsakila.inventory.domain.services.CategoryServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
 import com.springsakila.inventory.shared.PaginationConverter;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class CategoryController {
 
     @Autowired
-    private CategoryServiceImpl categoryService;
+    private CategoryService categoryService;
 
     @GetMapping("/category/{id}")
     public Category get(@PathVariable int id) throws NotFoundException {
