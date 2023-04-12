@@ -1,5 +1,6 @@
 package com.springsakila.controllers;
 
+import com.springsakila.inventory.domain.entities.Character;
 import com.springsakila.inventory.domain.services.CharacterServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,9 @@ public class CharacterCollectionController {
 
     @GetMapping
     public List<CharacterDTO> getAll(@RequestParam(required = false) String sort) {
-        return sort != null ? (List<CharacterDTO>) characterService.getByProjection(Sort.by(sort),
-                CharacterDTO.class) : characterService.getByProjection(CharacterDTO.class);
+        List<Character> characterList = sort != null ? (List<Character>) characterService.getByProjection(Sort.by(sort),
+                Character.class) : characterService.getByProjection(Character.class);
+        return characterList.stream().map(CharacterDTO::from).toList();
     }
 
     @GetMapping(params = "page")

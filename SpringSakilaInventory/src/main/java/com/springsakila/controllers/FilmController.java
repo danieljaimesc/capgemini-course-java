@@ -47,7 +47,8 @@ public class FilmController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable int id) {
+    public void deleteById(@PathVariable int id) throws NotFoundException {
+        if(filmService.getOne(id).isEmpty()) throw new NotFoundException();
         filmService.deleteById(id);
     }
 

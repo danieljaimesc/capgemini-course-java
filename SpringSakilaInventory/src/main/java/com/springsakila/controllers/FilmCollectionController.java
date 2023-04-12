@@ -1,5 +1,6 @@
 package com.springsakila.controllers;
 
+import com.springsakila.inventory.domain.entities.Film;
 import com.springsakila.inventory.domain.services.FilmServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.FilmDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,9 @@ public class FilmCollectionController {
 
     @GetMapping
     public List<FilmDTO> getAll(@RequestParam(required = false) String sort) {
-        return sort != null ? (List<FilmDTO>) filmService.getByProjection(Sort.by(sort),
-                FilmDTO.class) : filmService.getByProjection(FilmDTO.class);
+        List<Film> filmsList = sort != null ? (List<Film>) filmService.getByProjection(Sort.by(sort), Film.class) :
+                filmService.getByProjection(Film.class);
+        return filmsList.stream().map(FilmDTO::from).toList();
     }
 
     @GetMapping(params = "page")
