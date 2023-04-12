@@ -19,8 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 //TODO swagger schema
-public class FilmDTO {
-    private int id;
+public class FilmDetailsDTO {
+    private int filmId;
     private String description;
     private int length;
     @Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
@@ -39,8 +39,8 @@ public class FilmDTO {
     private List<Integer> characters = new ArrayList<>();
     private List<Integer> categories = new ArrayList<>();
 
-    public static FilmDTO from(Film source) {
-        return new FilmDTO(
+    public static FilmDetailsDTO from(Film source) {
+        return new FilmDetailsDTO(
                 source.getFilmId(),
                 source.getDescription(),
                 source.getLength(),
@@ -57,9 +57,9 @@ public class FilmDTO {
         );
     }
 
-    public static Film from(FilmDTO source) {
+    public static Film from(FilmDetailsDTO source) {
         Film result = new Film(
-                source.getId(),
+                source.getFilmId(),
                 source.getTitle(),
                 source.getDescription(),
                 source.getReleaseYear(),

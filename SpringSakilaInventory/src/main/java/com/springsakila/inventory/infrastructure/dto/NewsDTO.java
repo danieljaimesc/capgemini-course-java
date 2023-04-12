@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 //TODO swagger schema
 public class NewsDTO {
-    private List<FilmDTO> films;
+    private List<FilmDetailsDTO> films;
     private List<CharacterDTO> characters;
     private List<Category> categories;
     private List<Language> languages;

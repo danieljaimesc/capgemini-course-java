@@ -4,7 +4,7 @@ import com.springsakila.inventory.domain.entities.Category;
 import com.springsakila.inventory.domain.entities.Film;
 import com.springsakila.inventory.domain.services.FilmServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
-import com.springsakila.inventory.infrastructure.dto.FilmDTO;
+import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
@@ -23,32 +23,34 @@ public class FilmController {
     private FilmServiceImpl filmService;
 
     @GetMapping("/{id}")
-    public FilmDTO get(@PathVariable int id) throws NotFoundException {
+    public FilmDetailsDTO get(@PathVariable int id) throws NotFoundException {
         var film = filmService.getOne(id);
         if (film.isEmpty()) throw new NotFoundException();
-        return FilmDTO.from(film.get());
+        return FilmDetailsDTO.from(film.get());
     }
 
     //Create record if not exist and if exist update it
     @PostMapping
-    public FilmDTO postCreate(@Valid @RequestBody FilmDTO filmDTO) throws InvalidDataException, BadRequestException,
+    public FilmDetailsDTO postCreate(@Valid @RequestBody FilmDetailsDTO filmDetailsDTO) throws InvalidDataException,
+            BadRequestException,
             NotFoundException, DuplicateKeyException {
-        FilmDTO filmResult;
-        if (filmService.getOne(filmDTO.getId()).isPresent()) filmResult = update(filmDTO.getId(), filmDTO);
-        else filmResult = FilmDTO.from(filmService.add(FilmDTO.from(filmDTO)));
+        FilmDetailsDTO filmResult;
+        if (filmService.getOne(filmDetailsDTO.getFilmId()).isPresent())
+            filmResult = update(filmDetailsDTO.getFilmId(), filmDetailsDTO);
+        else filmResult = FilmDetailsDTO.from(filmService.add(FilmDetailsDTO.from(filmDetailsDTO)));
         return filmResult;
     }
 
     @PatchMapping("/{id}")
-    public FilmDTO update(@PathVariable int id, @Valid @RequestBody FilmDTO filmDTO) throws BadRequestException,
+    public FilmDetailsDTO update(@PathVariable int id, @Valid @RequestBody FilmDetailsDTO filmDetailsDTO) throws BadRequestException,
             InvalidDataException, NotFoundException {
-        if (id != filmDTO.getId()) throw new BadRequestException("Identifiers do not match");
-        return FilmDTO.from(filmService.modify(FilmDTO.from(filmDTO)));
+        if (filmService.getOne(id).isEmpty()) throw new BadRequestException("Id not exist.");
+        return FilmDetailsDTO.from(filmService.modify(FilmDetailsDTO.from(filmDetailsDTO)));
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id) throws NotFoundException {
-        if(filmService.getOne(id).isEmpty()) throw new NotFoundException();
+        if (filmService.getOne(id).isEmpty()) throw new NotFoundException();
         filmService.deleteById(id);
     }
 
