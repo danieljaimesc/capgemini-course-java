@@ -10,6 +10,7 @@ import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,6 +63,7 @@ public class CategoryController {
     }
 
     @GetMapping("/category/{id}/films")
+    @Transactional
     public Page<FilmShortDTO> getFilmShortList(Pageable pageable, @RequestParam(defaultValue = "short") String mode,
                                                @PathVariable int id) throws NotFoundException {
         Optional<Category> category = categoryService.getOne(id);
@@ -72,6 +74,7 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/category/{id}/films", params = "mode=details")
+    @Transactional
     public Page<FilmDetailsDTO> getFilmDetailsList(@Parameter(hidden = true) Pageable pageable,
                                                    @RequestParam(defaultValue = "short") String mode,
                                                    @PathVariable int id) throws NotFoundException {
