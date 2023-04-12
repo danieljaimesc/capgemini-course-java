@@ -11,6 +11,7 @@ import com.springsakila.inventory.shared.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class CharacterController {
     @Autowired
     private CharacterServiceImpl characterService;
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/{id}")
     public CharacterDTO get(@PathVariable int id) throws NotFoundException {
         var character = characterService.getOne(id);
         if (character.isEmpty()) throw new NotFoundException();
@@ -31,19 +32,15 @@ public class CharacterController {
 
     //Create record if not exist and if exist update it
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public CharacterDTO postCreate(@Valid @RequestBody CharacterDTO characterDTO) throws InvalidDataException,
-            DuplicateKeyException, BadRequestException, NotFoundException {
-        CharacterDTO characterResult;
-        if (characterService.getOne(characterDTO.getCharacterId()).isPresent())
-            characterResult = update(characterDTO.getCharacterId(), characterDTO);
-        else characterResult = CharacterDTO.from(characterService.add(CharacterDTO.from(characterDTO)));
-        return characterResult;
+            DuplicateKeyException {
+        return CharacterDTO.from(characterService.add(CharacterDTO.from(characterDTO)));
     }
 
     @PatchMapping("/{id}")
     @Transactional
-    public CharacterDTO update(@PathVariable int id, @Valid @RequestBody CharacterDTO characterDTO) throws BadRequestException,
-            InvalidDataException, NotFoundException {
+    public CharacterDTO update(@PathVariable int id, @Valid @RequestBody CharacterDTO characterDTO) throws BadRequestException, InvalidDataException, NotFoundException {
         if (characterService.getOne(id).isEmpty()) throw new BadRequestException("Id not exist.");
         return CharacterDTO.from(characterService.modify(CharacterDTO.from(id, characterDTO)));
     }

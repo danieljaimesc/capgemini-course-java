@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,13 +35,10 @@ public class LanguageController {
     }
 
     @PostMapping("/language")
+    @ResponseStatus(HttpStatus.CREATED)
     public Language postCreate(@Valid @RequestBody Language language) throws InvalidDataException, BadRequestException,
-            NotFoundException, DuplicateKeyException {
-        Language languageResult;
-        if (languageService.getOne(language.getLanguageId()).isPresent())
-            languageResult = update(language.getLanguageId(), language);
-        else languageResult = languageService.add(language);
-        return languageResult;
+            DuplicateKeyException {
+        return languageService.add(language);
     }
 
     @PatchMapping("/language/{id}")

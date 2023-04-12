@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,14 +36,10 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
+    @ResponseStatus(HttpStatus.CREATED)
     public Category postCreate(@Valid @RequestBody Category category) throws InvalidDataException,
-            DuplicateKeyException,
-            BadRequestException, NotFoundException {
-        Category categoryResult;
-        if (categoryService.getOne(category.getCategoryId()).isPresent())
-            categoryResult = update(category.getCategoryId(), category);
-        else categoryResult = categoryService.add(category);
-        return categoryResult;
+            DuplicateKeyException {
+        return categoryService.add(category);
     }
 
     @PatchMapping("/category/{id}")

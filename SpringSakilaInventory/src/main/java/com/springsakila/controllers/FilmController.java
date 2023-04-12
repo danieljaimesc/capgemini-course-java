@@ -11,6 +11,7 @@ import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,14 +32,10 @@ public class FilmController {
 
     //Create record if not exist and if exist update it
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public FilmDetailsDTO postCreate(@Valid @RequestBody FilmDetailsDTO filmDetailsDTO) throws InvalidDataException,
-            BadRequestException,
-            NotFoundException, DuplicateKeyException {
-        FilmDetailsDTO filmResult;
-        if (filmService.getOne(filmDetailsDTO.getFilmId()).isPresent())
-            filmResult = update(filmDetailsDTO.getFilmId(), filmDetailsDTO);
-        else filmResult = FilmDetailsDTO.from(filmService.add(FilmDetailsDTO.from(filmDetailsDTO)));
-        return filmResult;
+            DuplicateKeyException {
+        return  FilmDetailsDTO.from(filmService.add(FilmDetailsDTO.from(filmDetailsDTO)));
     }
 
     @PatchMapping("/{id}")
