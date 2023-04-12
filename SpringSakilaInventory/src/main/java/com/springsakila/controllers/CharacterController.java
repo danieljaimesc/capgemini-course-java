@@ -8,9 +8,9 @@ import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,15 +41,16 @@ public class CharacterController {
     }
 
     @PatchMapping("/{id}")
+    @Transactional
     public CharacterDTO update(@PathVariable int id, @Valid @RequestBody CharacterDTO characterDTO) throws BadRequestException,
             InvalidDataException, NotFoundException {
-        if (id != characterDTO.getCharacterId()) throw new BadRequestException("Identifiers do not match");
-        return CharacterDTO.from(characterService.modify(CharacterDTO.from(characterDTO)));
+        if (characterService.getOne(id).isEmpty()) throw new BadRequestException("Id not exist.");
+        return CharacterDTO.from(characterService.modify(CharacterDTO.from(id, characterDTO)));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable int id) {
+    public void deleteById(@PathVariable int id) throws NotFoundException {
+        if (characterService.getOne(id).isEmpty()) throw new NotFoundException();
         characterService.deleteById(id);
     }
 

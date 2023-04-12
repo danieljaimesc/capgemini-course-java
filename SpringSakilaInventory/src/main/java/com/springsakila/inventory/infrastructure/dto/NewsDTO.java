@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//TODO swagger schema
 public class NewsDTO {
     private List<FilmDTO> films;
     private List<CharacterDTO> characters;

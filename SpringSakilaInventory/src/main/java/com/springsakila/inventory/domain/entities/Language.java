@@ -1,6 +1,7 @@
 package com.springsakila.inventory.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.springsakila.inventory.domain.core.entities.EntityBase;
 import jakarta.persistence.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "language")
 @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Language extends EntityBase<Language> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

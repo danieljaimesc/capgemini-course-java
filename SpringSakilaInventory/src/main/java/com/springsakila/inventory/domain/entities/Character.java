@@ -23,10 +23,10 @@ public class Character extends EntityBase<Character> implements Serializable {
     private int characterId;
 
     @Column(name = "first_name", nullable = false, length = 45)
+    @Pattern(regexp = "[A-Z]+", message = "It has to be in upper case")
     @NotBlank
     @Size(max = 45, min = 2)
     private String firstName;
-
     @Column(name = "last_name", nullable = false, length = 45)
     @Size(max = 45, min = 2)
     @Pattern(regexp = "[A-Z]+", message = "It has to be in upper case")
@@ -127,15 +127,8 @@ public class Character extends EntityBase<Character> implements Serializable {
     }
 
     public Character merge(Character target) {
-        target.firstName = firstName;
-        target.lastName = lastName;
-        //Remove filmsCharacter there are not need
-        target.filmCharacters.stream().filter(item -> !getFilmCharacters().contains(item))
-                .forEach(target::removeFilmCharacter);
-        //Add missing filmCharacters
-        getFilmCharacters().stream()
-                .filter(item -> !target.getFilmCharacters().contains(item))
-                .forEach(target::addFilmCharacter);
+        if (firstName != null && !firstName.equals(target.firstName)) target.firstName = firstName;
+        if (lastName != null && !lastName.equals(target.lastName)) target.lastName = lastName;
         return target;
     }
 }

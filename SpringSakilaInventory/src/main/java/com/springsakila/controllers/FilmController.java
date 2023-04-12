@@ -34,7 +34,7 @@ public class FilmController {
     public FilmDTO postCreate(@Valid @RequestBody FilmDTO filmDTO) throws InvalidDataException, BadRequestException,
             NotFoundException, DuplicateKeyException {
         FilmDTO filmResult;
-        if (filmService.getOne(filmDTO.getFilmId()).isPresent()) filmResult = update(filmDTO.getFilmId(), filmDTO);
+        if (filmService.getOne(filmDTO.getId()).isPresent()) filmResult = update(filmDTO.getId(), filmDTO);
         else filmResult = FilmDTO.from(filmService.add(FilmDTO.from(filmDTO)));
         return filmResult;
     }
@@ -42,7 +42,7 @@ public class FilmController {
     @PatchMapping("/{id}")
     public FilmDTO update(@PathVariable int id, @Valid @RequestBody FilmDTO filmDTO) throws BadRequestException,
             InvalidDataException, NotFoundException {
-        if (id != filmDTO.getFilmId()) throw new BadRequestException("Identifiers do not match");
+        if (id != filmDTO.getId()) throw new BadRequestException("Identifiers do not match");
         return FilmDTO.from(filmService.modify(FilmDTO.from(filmDTO)));
     }
 

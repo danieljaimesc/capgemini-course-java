@@ -13,7 +13,6 @@ public class InventoryApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println("Aplicación arrancada");
-
+        System.out.println("Application started");
     }
 }

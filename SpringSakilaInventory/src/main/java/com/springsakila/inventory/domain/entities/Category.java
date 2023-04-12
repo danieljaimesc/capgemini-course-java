@@ -1,6 +1,8 @@
 package com.springsakila.inventory.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springsakila.inventory.domain.core.entities.EntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -17,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "category")
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category extends EntityBase<Category> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -25,6 +28,7 @@ public class Category extends EntityBase<Category> implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", unique = true, nullable = false)
     @Max(255)
+    @JsonProperty("id")
     private int categoryId;
 
     @Column(name = "last_update", insertable = false, updatable = false, nullable = false)

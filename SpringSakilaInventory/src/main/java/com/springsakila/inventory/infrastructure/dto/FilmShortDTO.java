@@ -5,8 +5,9 @@ import com.springsakila.inventory.domain.entities.Film;
 import lombok.Value;
 
 @Value
+//TODO swagger schema
 public class FilmShortDTO {
-    private int filmId;
+    private int id;
     private String title;
 
     public static FilmShortDTO from(Film source) {

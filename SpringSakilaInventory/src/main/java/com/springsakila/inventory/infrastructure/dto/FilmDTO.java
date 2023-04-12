@@ -18,8 +18,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//TODO swagger schema
 public class FilmDTO {
-    private int filmId;
+    private int id;
     private String description;
     private int length;
     @Pattern(regexp = "^(G|PG|PG-13|R|NC-17)$")
@@ -57,8 +58,8 @@ public class FilmDTO {
     }
 
     public static Film from(FilmDTO source) {
-        Film rslt = new Film(
-                source.getFilmId(),
+        Film result = new Film(
+                source.getId(),
                 source.getTitle(),
                 source.getDescription(),
                 source.getReleaseYear(),
@@ -70,9 +71,9 @@ public class FilmDTO {
                 source.getReplacementCost(),
                 source.getRating() == null ? null : Rating.getEnum(source.getRating())
         );
-        source.getCharacters().forEach(rslt::addCharacter);
-        source.getCategories().forEach(rslt::addCategory);
-        return rslt;
+        source.getCharacters().forEach(result::addCharacter);
+        source.getCategories().forEach(result::addCategory);
+        return result;
     }
 
 }

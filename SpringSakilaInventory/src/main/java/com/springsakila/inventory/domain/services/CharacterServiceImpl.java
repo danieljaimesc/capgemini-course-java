@@ -61,7 +61,6 @@ public class CharacterServiceImpl implements CharacterService {
         if (item == null) throw new InvalidDataException(InvalidDataException.CANT_BE_NULL);
         if (item.isInvalid()) throw new InvalidDataException(item.getErrorsMessage());
         if (dao.existsById(item.getCharacterId())) throw new DuplicateKeyException(item.getErrorsMessage());
-
         return dao.save(item);
     }
 
