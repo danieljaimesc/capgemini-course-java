@@ -19,10 +19,7 @@ public class CatalogController {
 
     @GetMapping
     public NewsDTO get(@RequestParam(required = false) LocalDate date) {
-        Timestamp timestamp = null;
-        if (date != null) {
-            timestamp = Timestamp.valueOf(date.atStartOfDay());
-        }
+        Timestamp timestamp = date != null ? Timestamp.valueOf(date.atStartOfDay()) : null;
         return catalogService.news(timestamp);
     }
 }
