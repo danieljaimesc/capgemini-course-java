@@ -22,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class CatalogServiceImplTest {
-    @Autowired
+class CatalogServiceTest {
+    @MockBean
     private CatalogService catalogService;
 
     @MockBean

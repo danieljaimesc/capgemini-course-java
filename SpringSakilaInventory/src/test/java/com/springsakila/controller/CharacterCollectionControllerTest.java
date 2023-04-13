@@ -1,7 +1,7 @@
 package com.springsakila.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsakila.controllers.CharacterCollectionController;
+import com.springsakila.controllers.character.CharacterCollectionController;
 import com.springsakila.inventory.domain.services.CharacterServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import lombok.Value;

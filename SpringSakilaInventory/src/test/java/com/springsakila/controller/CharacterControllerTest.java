@@ -1,9 +1,9 @@
 package com.springsakila.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsakila.controllers.CharacterController;
+import com.springsakila.controllers.character.CharacterController;
+import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.domain.entities.Character;
-import com.springsakila.inventory.domain.services.CharacterServiceImpl;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import lombok.Value;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CharacterController.class)
 public class CharacterControllerTest {
@@ -29,7 +30,7 @@ public class CharacterControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private CharacterServiceImpl srv;
+    private CharacterService srv;
 
     private String urlTemplate;
 

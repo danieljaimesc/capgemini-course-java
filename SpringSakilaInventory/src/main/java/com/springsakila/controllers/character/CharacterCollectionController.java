@@ -1,4 +1,4 @@
-package com.springsakila.controllers;
+package com.springsakila.controllers.character;
 
 import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;

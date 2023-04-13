@@ -1,4 +1,4 @@
-package com.springsakila.controllers;
+package com.springsakila.controllers.film;
 
 import com.springsakila.inventory.domain.contracts.services.FilmService;
 import com.springsakila.inventory.domain.entities.Category;
