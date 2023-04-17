@@ -24,12 +24,12 @@ buttonsOperationsAndNumber.forEach((element) => {
         if (element.className === "number" && numberOne && operation && !numberTwo) {
             numberTwo = element.textContent  
         }
-        if (element.id === "dot" && numberOne && !dotNumberOne) {
+        if (element.id === "dot" && numberOne && !dotNumberOne && !operation) {
             numberOne = numberOne + "."
             inputOperation.value = inputOperation.value + ","
             dotNumberOne = true;
         }
-        if (element.id === "dot" && numberTwo && !dotNumberTwo) {
+        if (element.id === "dot" && numberTwo && !dotNumberTwo && operation) {
             numberTwo = numberTwo + "."
             dotNumberTwo = true;
             inputOperation.value = inputOperation.value + ","
@@ -52,32 +52,21 @@ document.querySelector("#resolve").addEventListener("click", () => {
 const resolveOperation = () => {
     switch (operation) {
         case "x":
-            if (Number.isInteger(numberOne) && Number.isInteger(numberTwo)) {
-                inputOperation.value = parseInt(numberOne) * parseInt(numberTwo)
-            } else {
-                inputOperation.value = parseFloat(numberOne) * parseFloat(numberTwo)
-            }
+            inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
+                * (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
             break;
         case "/":
-            if (Number.isInteger(numberOne) && Number.isInteger(numberTwo)) {
-                inputOperation.value = parseInt(numberOne) / parseInt(numberTwo)
-            } else {
-                inputOperation.value = parseFloat(numberOne) / parseFloat(numberTwo)
-            }
+            inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
+            / (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
             break;
         case "+":
-        if (Number.isInteger(numberOne) && Number.isInteger(numberTwo)) {
-            inputOperation.value = parseInt(numberOne) + parseInt(numberTwo)
-        } else {
-            inputOperation.value = parseFloat(numberOne) + parseFloat(numberTwo)
-        }
+            inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
+                + (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
+
             break;
         case "-":
-            if (Number.isInteger(numberOne) && Number.isInteger(numberTwo)) {
-                inputOperation.value = parseInt(numberOne) - parseInt(numberTwo)
-            } else {
-                inputOperation.value = parseFloat(numberOne) - parseFloat(numberTwo)
-            }
+            inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
+            - (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
             break;
     }
     inputOperation.value =  String(inputOperation.value).replace(".", ",")
