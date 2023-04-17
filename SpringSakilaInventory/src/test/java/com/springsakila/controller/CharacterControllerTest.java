@@ -1,7 +1,7 @@
 package com.springsakila.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsakila.controllers.character.CharacterController;
+import com.springsakila.controllers.CharacterController;
 import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.domain.entities.Character;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;

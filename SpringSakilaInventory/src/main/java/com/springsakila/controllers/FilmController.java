@@ -1,16 +1,22 @@
-package com.springsakila.controllers.film;
+package com.springsakila.controllers;
 
 import com.springsakila.inventory.domain.contracts.services.FilmService;
 import com.springsakila.inventory.domain.entities.Category;
 import com.springsakila.inventory.domain.entities.Film;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
+import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
+import com.springsakila.inventory.shared.PaginationConverter;
 import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/film")
+@RequestMapping("/api/v1/films")
 public class FilmController {
     @Autowired
     private FilmService filmService;
@@ -30,7 +36,6 @@ public class FilmController {
         return FilmDetailsDTO.from(film.get());
     }
 
-    //Create record if not exist and if exist update it
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FilmDetailsDTO postCreate(@Valid @RequestBody FilmDetailsDTO filmDetailsDTO) throws InvalidDataException,
@@ -49,6 +54,20 @@ public class FilmController {
     public void deleteById(@PathVariable int id) throws NotFoundException {
         if (filmService.getOne(id).isEmpty()) throw new NotFoundException();
         filmService.deleteById(id);
+    }
+
+    @GetMapping
+    public Page<FilmShortDTO> getAll(Pageable pageable, @RequestParam(defaultValue = "short") String mode) {
+        return filmService.getByProjection(pageable, FilmShortDTO.class);
+    }
+
+
+    @GetMapping(params = "mode=details")
+    @Transactional
+    public Page<FilmDetailsDTO> getAllDetails(@Parameter(hidden = true) Pageable pageable,
+                                              @RequestParam(defaultValue = "short") String mode) {
+        List<FilmDetailsDTO> filmDetailsDTOList = filmService.getAll().stream().map(FilmDetailsDTO::from).toList();
+        return PaginationConverter.paginateList(pageable, filmDetailsDTOList);
     }
 
     @GetMapping("/{id}/characters")

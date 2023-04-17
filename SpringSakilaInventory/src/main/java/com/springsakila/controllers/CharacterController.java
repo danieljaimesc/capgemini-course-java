@@ -1,4 +1,4 @@
-package com.springsakila.controllers.character;
+package com.springsakila.controllers;
 
 import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.domain.entities.Character;
@@ -11,6 +11,9 @@ import com.springsakila.inventory.shared.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/character")
+@RequestMapping("/api/v1/characters")
 public class CharacterController {
     @Autowired
     private CharacterService characterService;
@@ -30,7 +33,6 @@ public class CharacterController {
         return CharacterDTO.from(character.get());
     }
 
-    //Create record if not exist and if exist update it
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public CharacterDTO postCreate(@Valid @RequestBody CharacterDTO characterDTO) throws InvalidDataException,
@@ -49,6 +51,17 @@ public class CharacterController {
     public void deleteById(@PathVariable int id) throws NotFoundException {
         if (characterService.getOne(id).isEmpty()) throw new NotFoundException();
         characterService.deleteById(id);
+    }
+
+    @GetMapping
+    public List<CharacterDTO> getAll(@RequestParam(required = false) String sort) {
+        return sort != null ? (List<CharacterDTO>) characterService.getByProjection(Sort.by(sort),
+                CharacterDTO.class) : characterService.getByProjection(CharacterDTO.class);
+    }
+
+    @GetMapping(params = "page")
+    public Page<CharacterDTO> getAll(Pageable pageable) {
+        return characterService.getByProjection(pageable, CharacterDTO.class);
     }
 
     @GetMapping("/{id}/films")
