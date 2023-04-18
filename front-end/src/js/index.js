@@ -38,7 +38,6 @@ buttonsOperationsAndNumber.forEach((element) => {
             inputOperation.value = inputOperation.value ? inputOperation.value + element.textContent : element.textContent
 
         }
-        console.log({numberOne, numberTwo})
     })
 })
 
@@ -57,7 +56,7 @@ const resolveOperation = () => {
             break;
         case "/":
             inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
-            / (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
+                / (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
             break;
         case "+":
             inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
@@ -66,10 +65,11 @@ const resolveOperation = () => {
             break;
         case "-":
             inputOperation.value = (Number.isInteger(numberOne) ? parseInt(numberOne) : parseFloat(numberOne))
-            - (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
+                - (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
             break;
     }
-    inputOperation.value =  String(inputOperation.value).replace(".", ",")
+    console.log(inputOperation.value)
+    inputOperation.value =  inputOperation.value.includes(".") ? String(inputOperation.value).replace(".", ",") : eval(inputOperation.value)
     numberOne = inputOperation.value
     numberTwo = undefined
     console.log({ numberOne, numberTwo})
