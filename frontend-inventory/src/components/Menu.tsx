@@ -6,8 +6,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 interface Props {
   menu: Array<{ text: string; url: string }>;
+  actualPage: number;
+  onSelectMenu: (index: number) => void;
 }
-function Menu({ menu }: Props) {
+function Menu({ menu, actualPage, onSelectMenu }: Props) {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -15,7 +17,15 @@ function Menu({ menu }: Props) {
           {menu.length !== 0 ? (
             menu.map((item, index) => (
               <div key={index}>
-                <Nav.Link href={item.url}>{item.text}</Nav.Link>
+                <Nav.Link
+                  onClick={(ev) => {
+                    ev.preventDefault();
+                    onSelectMenu(index);
+                  }}
+                  href={item.url}
+                >
+                  {item.text}
+                </Nav.Link>
               </div>
             ))
           ) : (
