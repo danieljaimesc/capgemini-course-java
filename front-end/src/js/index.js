@@ -5,7 +5,6 @@ var dotNumberTwo = false;
 const buttonsOperationsAndNumber = document.querySelectorAll(".number,.operation,#dot")
 buttonsOperationsAndNumber.forEach((element) => {
     element.addEventListener("click", () => {
-        //console.log(element.className)
         if (element.className === "operation" && numberOne && numberTwo && operation) {
             resolveOperation()
         }
@@ -68,9 +67,7 @@ const resolveOperation = () => {
                 - (Number.isInteger(numberTwo) ? parseInt(numberTwo) : parseFloat(numberTwo))
             break;
     }
-    console.log(inputOperation.value)
     inputOperation.value =  inputOperation.value.includes(".") ? String(inputOperation.value).replace(".", ",") : eval(inputOperation.value)
     numberOne = inputOperation.value
     numberTwo = undefined
-    console.log({ numberOne, numberTwo})
 }
