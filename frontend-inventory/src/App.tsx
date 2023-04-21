@@ -6,27 +6,31 @@ import Catalog from "./pages/Catalog";
 import Characters from "./pages/Characters";
 import Languages from "./pages/Languages";
 import Categories from "./pages/Categories";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [main, setPage] = useState<number>(0);
 
   const menu = [
-    { text: "Home", url: "/home", component: <Home /> },
+    { text: "Home", url: "/", component: <Home /> },
     { text: "News", url: "/news", component: <Catalog /> },
     { text: "Character", url: "/characters", component: <Characters /> },
     { text: "Films", url: "/films", component: <Films /> },
-    { text: "Languages", url: "/languages", component: <Categories /> },
+    { text: "Categories", url: "/categories", component: <Categories /> },
     { text: "Languages", url: "/languages", component: <Languages /> },
   ];
 
   return (
     <>
-      <Menu
-        menu={menu}
-        actualPage={main}
-        onSelectMenu={(main) => setPage(main)}
-      />
-      {menu[main].component}
+      <Menu menu={menu} />
+      <Routes>
+        <Route path="/news" element={<Catalog />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/characters" element={<Characters />} />
+        <Route path="/films" element={<Films />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/languages" element={<Languages />} />
+      </Routes>
     </>
   );
 }
