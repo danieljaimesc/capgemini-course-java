@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -40,22 +38,10 @@ public class CatalogController {
         @Value
         public class CatalogoLinks {
             private Href self = new Href("");
-            private HashMap<String, Href> character = new HashMap<>() {{
-                put("One", new Href("/api/v1/character"));
-                put("Collection", new Href("/api/v1/characters"));
-            }};
-            private Map<String, Href> film = new HashMap<>() {{
-                put("One", new Href("/api/v1/film"));
-                put("Collection", new Href("/api/v1/films"));
-            }};
-            private HashMap<String, Href> category = new HashMap<>() {{
-                put("One", new Href("/api/v1/category"));
-                put("Collection", new Href("/api/v1/categories"));
-            }};
-            private HashMap<String, Href> languages = new HashMap<>() {{
-                put("One", new Href("/api/v1/language"));
-                put("Collection", new Href("/api/v1/languages"));
-            }};
+            private Href character = new Href("/api/v1/character");
+            private Href film = new Href("/api/v1/films");
+            private Href category =new Href("/api/v1/categories");
+            private Href languages = new Href("/api/v1/languages");
             private Href news = new Href("/api/v1/news");
             private Href documentation = new Href("/open-api");
 

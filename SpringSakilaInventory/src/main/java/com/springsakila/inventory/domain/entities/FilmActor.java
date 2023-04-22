@@ -13,41 +13,41 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "film_actor")
-@NamedQuery(name = "FilmCharacter.findAll", query = "SELECT f FROM FilmCharacter f")
-public class FilmCharacter extends EntityBase<FilmCharacter> implements Serializable {
+@NamedQuery(name = "FilmActor.findAll", query = "SELECT f FROM FilmActor f")
+public class FilmActor extends EntityBase<FilmActor> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private FilmCharacterPK id;
+    private FilmActorPK id;
 
     @Column(name = "last_update", nullable = false)
     private Timestamp lastUpdate;
 
-    //bidirectional many-to-one association to Character
+    //bidirectional many-to-one association to Actor
     @ManyToOne
     @JoinColumn(name = "actor_id", nullable = false, insertable = false, updatable = false)
-    private Character character;
+    private Actor character;
 
     //bidirectional many-to-one association to Film
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false, insertable = false, updatable = false)
     private Film film;
 
-    public FilmCharacter() {
+    public FilmActor() {
     }
 
-    public FilmCharacter(Film film, Character character) {
+    public FilmActor(Film film, Actor character) {
         super();
         this.character = character;
         this.film = film;
     }
 
-    public FilmCharacterPK getId() {
+    public FilmActorPK getId() {
         return this.id;
     }
 
-    protected void setId(FilmCharacterPK id) {
+    protected void setId(FilmActorPK id) {
         this.id = id;
     }
 
@@ -59,11 +59,11 @@ public class FilmCharacter extends EntityBase<FilmCharacter> implements Serializ
         this.lastUpdate = lastUpdate;
     }
 
-    public Character getCharacter() {
+    public Actor getActor() {
         return this.character;
     }
 
-    protected void setCharacter(Character character) {
+    protected void setActor(Actor character) {
         this.character = character;
     }
 

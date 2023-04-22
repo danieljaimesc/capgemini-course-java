@@ -1,7 +1,7 @@
 package com.springsakila.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsakila.controllers.CharacterController;
+import com.springsakila.controllers.ActorController;
 import com.springsakila.inventory.domain.contracts.services.CharacterService;
 import com.springsakila.inventory.domain.entities.Character;
 import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
@@ -23,8 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CharacterController.class)
-public class CharacterControllerTest {
+@WebMvcTest(ActorController.class)
+public class ActorControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     @Autowired

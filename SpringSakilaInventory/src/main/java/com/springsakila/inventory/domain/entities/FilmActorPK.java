@@ -10,7 +10,7 @@ import java.io.Serializable;
  * The primary key class for the film_actor database table.
  */
 @Embeddable
-public class FilmCharacterPK implements Serializable {
+public class FilmActorPK implements Serializable {
     //default serial version id, required for serializable classes.
     @Serial
     private static final long serialVersionUID = 1L;
@@ -21,14 +21,14 @@ public class FilmCharacterPK implements Serializable {
     @Column(name = "film_id", insertable = false, updatable = false, unique = true, nullable = false)
     private int filmId;
 
-    public FilmCharacterPK() {
+    public FilmActorPK() {
     }
 
-    public int getCharacterId() {
+    public int getActorId() {
         return this.characterId;
     }
 
-    protected void setCharacterId(int characterId) {
+    protected void setActorId(int characterId) {
         this.characterId = characterId;
     }
 
@@ -44,7 +44,7 @@ public class FilmCharacterPK implements Serializable {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof FilmCharacterPK castOther)) {
+        if (!(other instanceof FilmActorPK castOther)) {
             return false;
         }
         return

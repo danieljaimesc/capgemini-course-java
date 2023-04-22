@@ -65,10 +65,10 @@ public class Film extends EntityBase<Film> implements Serializable {
     @ManyToOne
     @JoinColumn(name = "original_language_id")
     private Language languageVO;
-    //bidirectional many-to-one association to FilmCharacter
+    //bidirectional many-to-one association to FilmActor
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<FilmCharacter> filmCharacters = new ArrayList<>();
+    private List<FilmActor> filmActors = new ArrayList<>();
     //bidirectional many-to-one association to FilmCategory
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -125,8 +125,8 @@ public class Film extends EntityBase<Film> implements Serializable {
 
     protected void setFilmId(int filmId) {
         this.filmId = filmId;
-        if (filmCharacters != null && filmCharacters.size() > 0)
-            filmCharacters.forEach(item -> {
+        if (filmActors != null && filmActors.size() > 0)
+            filmActors.forEach(item -> {
                 if (item.getId().getFilmId() != filmId) item.getId().setFilmId(filmId);
             });
         if (filmCategories != null && filmCategories.size() > 0)
@@ -223,35 +223,35 @@ public class Film extends EntityBase<Film> implements Serializable {
         this.languageVO = languageVO;
     }
 
-    public List<Character> getCharacters() {
-        return this.filmCharacters.stream().map(FilmCharacter::getCharacter).toList();
+    public List<Actor> getActors() {
+        return this.filmActors.stream().map(FilmActor::getActor).toList();
     }
 
-    protected void setCharacters(List<Character> source) {
-        if (filmCharacters == null || !filmCharacters.isEmpty()) clearCharacters();
-        source.forEach(this::addCharacter);
+    protected void setActors(List<Actor> source) {
+        if (filmActors == null || !filmActors.isEmpty()) clearActors();
+        source.forEach(this::addActor);
     }
 
-    // Characters manage
+    // Actors manage
 
-    public void clearCharacters() {
-        filmCharacters = new ArrayList<>();
+    public void clearActors() {
+        filmActors = new ArrayList<>();
     }
 
-    public void addCharacter(Character character) {
-        FilmCharacter filmCharacter = new FilmCharacter(this, character);
-        filmCharacters.add(filmCharacter);
+    public void addActor(Actor character) {
+        FilmActor filmActor = new FilmActor(this, character);
+        filmActors.add(filmActor);
     }
 
-    public void addCharacter(int characterId) {
-        addCharacter(new Character(characterId));
+    public void addActor(int characterId) {
+        addActor(new Actor(characterId));
     }
 
-    public void removeCharacter(Character character) {
-        var filmCharacter = filmCharacters.stream().filter(item -> item.getCharacter().equals(character)).findFirst();
-        if (filmCharacter.isEmpty())
+    public void removeActor(Actor character) {
+        var filmActor = filmActors.stream().filter(item -> item.getActor().equals(character)).findFirst();
+        if (filmActor.isEmpty())
             return;
-        filmCharacters.remove(filmCharacter.get());
+        filmActors.remove(filmActor.get());
     }
 
     public List<Category> getCategories() {
@@ -314,13 +314,13 @@ public class Film extends EntityBase<Film> implements Serializable {
         target.replacementCost = replacementCost;
         target.rating = rating;
         // Remove characters are not need
-        target.getCharacters().stream()
-                .filter(item -> !getCharacters().contains(item))
-                .forEach(target::removeCharacter);
+        target.getActors().stream()
+                .filter(item -> !getActors().contains(item))
+                .forEach(target::removeActor);
         // Add missing characters
-        getCharacters().stream()
-                .filter(item -> !target.getCharacters().contains(item))
-                .forEach(target::addCharacter);
+        getActors().stream()
+                .filter(item -> !target.getActors().contains(item))
+                .forEach(target::addActor);
         // Add missing categories
         target.getCategories().stream()
                 .filter(item -> !getCategories().contains(item))

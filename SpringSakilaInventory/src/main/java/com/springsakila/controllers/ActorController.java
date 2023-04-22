@@ -1,8 +1,8 @@
 package com.springsakila.controllers;
 
-import com.springsakila.inventory.domain.contracts.services.CharacterService;
-import com.springsakila.inventory.domain.entities.Character;
-import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
+import com.springsakila.inventory.domain.contracts.services.ActorService;
+import com.springsakila.inventory.domain.entities.Actor;
+import com.springsakila.inventory.infrastructure.dto.ActorDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
 import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
@@ -21,30 +21,30 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/characters")
-public class CharacterController {
+@RequestMapping("/api/v1/actors")
+public class ActorController {
     @Autowired
-    private CharacterService characterService;
+    private ActorService characterService;
 
     @GetMapping("/{id}")
-    public CharacterDTO get(@PathVariable int id) throws NotFoundException {
+    public ActorDTO get(@PathVariable int id) throws NotFoundException {
         var character = characterService.getOne(id);
         if (character.isEmpty()) throw new NotFoundException();
-        return CharacterDTO.from(character.get());
+        return ActorDTO.from(character.get());
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public CharacterDTO postCreate(@Valid @RequestBody CharacterDTO characterDTO) throws InvalidDataException,
+    public ActorDTO postCreate(@Valid @RequestBody ActorDTO characterDTO) throws InvalidDataException,
             DuplicateKeyException {
-        return CharacterDTO.from(characterService.add(CharacterDTO.from(characterDTO)));
+        return ActorDTO.from(characterService.add(ActorDTO.from(characterDTO)));
     }
 
     @PatchMapping("/{id}")
     @Transactional
-    public CharacterDTO update(@PathVariable int id, @Valid @RequestBody CharacterDTO characterDTO) throws BadRequestException, InvalidDataException, NotFoundException {
+    public ActorDTO update(@PathVariable int id, @Valid @RequestBody ActorDTO characterDTO) throws BadRequestException, InvalidDataException, NotFoundException {
         if (characterService.getOne(id).isEmpty()) throw new BadRequestException("Id not exist.");
-        return CharacterDTO.from(characterService.modify(CharacterDTO.from(id, characterDTO)));
+        return ActorDTO.from(characterService.modify(ActorDTO.from(id, characterDTO)));
     }
 
     @DeleteMapping("/{id}")
@@ -54,20 +54,21 @@ public class CharacterController {
     }
 
     @GetMapping
-    public List<CharacterDTO> getAll(@RequestParam(required = false) String sort) {
-        return sort != null ? (List<CharacterDTO>) characterService.getByProjection(Sort.by(sort),
-                CharacterDTO.class) : characterService.getByProjection(CharacterDTO.class);
+    public List<ActorDTO> getAll(@RequestParam(required = false) String sort) {
+        System.out.println("HOLA");
+        return sort != null ? (List<ActorDTO>) characterService.getByProjection(Sort.by(sort),
+                ActorDTO.class) : characterService.getByProjection(ActorDTO.class);
     }
 
     @GetMapping(params = "page")
-    public Page<CharacterDTO> getAll(Pageable pageable) {
-        return characterService.getByProjection(pageable, CharacterDTO.class);
+    public Page<ActorDTO> getAll(Pageable pageable) {
+        return characterService.getByProjection(pageable, ActorDTO.class);
     }
 
     @GetMapping("/{id}/films")
     public List<FilmShortDTO> getFilmList(@PathVariable int id) throws NotFoundException {
-        Optional<Character> character = characterService.getOne(id);
+        Optional<Actor> character = characterService.getOne(id);
         if (character.isEmpty()) throw new NotFoundException();
-        return character.get().getFilmCharacters().stream().map(item -> FilmShortDTO.from(item.getFilm())).toList();
+        return character.get().getFilmActors().stream().map(item -> FilmShortDTO.from(item.getFilm())).toList();
     }
 }

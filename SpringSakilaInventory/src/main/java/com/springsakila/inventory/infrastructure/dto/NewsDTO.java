@@ -14,7 +14,7 @@ import java.util.List;
 //TODO swagger schema
 public class NewsDTO {
     private List<FilmDetailsDTO> films;
-    private List<CharacterDTO> characters;
+    private List<ActorDTO> characters;
     private List<Category> categories;
     private List<Language> languages;
 }

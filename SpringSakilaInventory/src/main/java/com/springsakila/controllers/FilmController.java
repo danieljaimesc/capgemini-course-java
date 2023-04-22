@@ -3,7 +3,7 @@ package com.springsakila.controllers;
 import com.springsakila.inventory.domain.contracts.services.FilmService;
 import com.springsakila.inventory.domain.entities.Category;
 import com.springsakila.inventory.domain.entities.Film;
-import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
+import com.springsakila.inventory.infrastructure.dto.ActorDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
 import com.springsakila.inventory.shared.PaginationConverter;
@@ -71,10 +71,10 @@ public class FilmController {
     }
 
     @GetMapping("/{id}/characters")
-    public List<CharacterDTO> getCharacterList(@PathVariable int id) throws NotFoundException {
+    public List<ActorDTO> getActorList(@PathVariable int id) throws NotFoundException {
         Optional<Film> film = filmService.getOne(id);
         if (film.isEmpty()) throw new NotFoundException();
-        return film.get().getCharacters().stream().map(CharacterDTO::from).toList();
+        return film.get().getActors().stream().map(ActorDTO::from).toList();
     }
 
     @GetMapping("/{id}/categories")

@@ -15,12 +15,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "actor")
-@NamedQuery(name = "Character.findAll", query = "SELECT a FROM Character a")
-public class Character extends EntityBase<Character> implements Serializable {
+@NamedQuery(name = "Actor.findAll", query = "SELECT a FROM Actor a")
+public class Actor extends EntityBase<Actor> implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "actor_id", unique = true, nullable = false)
-    private int characterId;
+    private int actorId;
 
     @Column(name = "first_name", nullable = false, length = 45)
     @Pattern(regexp = "[A-Z]+", message = "It has to be in upper case")
@@ -36,31 +36,31 @@ public class Character extends EntityBase<Character> implements Serializable {
     @PastOrPresent
     private Timestamp lastUpdate;
 
-    //bidirectional many-to-one association to FilmCharacter
+    //bidirectional many-to-one association to FilmActor
     @OneToMany(mappedBy = "character", fetch = FetchType.LAZY)
-    private List<FilmCharacter> filmCharacters = new ArrayList<>();
+    private List<FilmActor> filmActors = new ArrayList<>();
 
 
-    public Character(int characterId, String firstName, String lastName) {
-        this.characterId = characterId;
+    public Actor(int actorId, String firstName, String lastName) {
+        this.actorId = actorId;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Character() {
+    public Actor() {
 
     }
 
-    public Character(int characterId) {
-        this.characterId = characterId;
+    public Actor(int actorId) {
+        this.actorId = actorId;
     }
 
-    public int getCharacterId() {
-        return characterId;
+    public int getActorId() {
+        return actorId;
     }
 
-    protected void setCharacterId(int characterId) {
-        this.characterId = characterId;
+    protected void setActorId(int characterId) {
+        this.actorId = characterId;
     }
 
     public String getFirstName() {
@@ -88,30 +88,30 @@ public class Character extends EntityBase<Character> implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
-    public List<FilmCharacter> getFilmCharacters() {
-        return this.filmCharacters;
+    public List<FilmActor> getFilmActors() {
+        return this.filmActors;
     }
 
-    protected void setFilmCharacters(List<FilmCharacter> filmCharacters) {
-        this.filmCharacters = filmCharacters;
+    protected void setFilmActors(List<FilmActor> filmActors) {
+        this.filmActors = filmActors;
     }
 
-    public FilmCharacter addFilmCharacter(FilmCharacter filmCharacter) {
-        getFilmCharacters().add(filmCharacter);
-        filmCharacter.setCharacter(this);
-        return filmCharacter;
+    public FilmActor addFilmActor(FilmActor filmActor) {
+        getFilmActors().add(filmActor);
+        filmActor.setActor(this);
+        return filmActor;
     }
 
-    public FilmCharacter removeFilmCharacter(FilmCharacter filmCharacter) {
-        getFilmCharacters().remove(filmCharacter);
-        filmCharacter.setCharacter(null);
-        return filmCharacter;
+    public FilmActor removeFilmActor(FilmActor filmActor) {
+        getFilmActors().remove(filmActor);
+        filmActor.setActor(null);
+        return filmActor;
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(characterId, firstName, lastName, lastUpdate);
+        return Objects.hash(actorId, firstName, lastName, lastUpdate);
     }
 
     @Override
@@ -122,11 +122,11 @@ public class Character extends EntityBase<Character> implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Character other = (Character) obj;
-        return characterId == other.characterId;
+        Actor other = (Actor) obj;
+        return actorId == other.actorId;
     }
 
-    public Character merge(Character target) {
+    public Actor merge(Actor target) {
         if (firstName != null && !firstName.equals(target.firstName)) target.firstName = firstName;
         if (lastName != null && !lastName.equals(target.lastName)) target.lastName = lastName;
         return target;

@@ -1,7 +1,7 @@
 package com.springsakila.inventory.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.springsakila.inventory.domain.entities.Character;
+import com.springsakila.inventory.domain.entities.Actor;
 import com.springsakila.inventory.domain.entities.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,7 +36,7 @@ public class FilmDetailsDTO {
     @NotNull
     private Integer languageId;
     private Integer languageVOId;
-    private List<Integer> characters = new ArrayList<>();
+    private List<Integer> actors = new ArrayList<>();
     private List<Integer> categories = new ArrayList<>();
 
     public static FilmDetailsDTO from(Film source) {
@@ -52,7 +52,7 @@ public class FilmDetailsDTO {
                 source.getTitle(),
                 source.getLanguage() == null ? null : source.getLanguage().getLanguageId(),
                 source.getLanguageVO() == null ? null : source.getLanguageVO().getLanguageId(),
-                source.getCharacters().stream().map(Character::getCharacterId).toList(),
+                source.getActors().stream().map(Actor::getActorId).toList(),
                 source.getCategories().stream().map(Category::getCategoryId).toList()
         );
     }
@@ -71,7 +71,7 @@ public class FilmDetailsDTO {
                 source.getReplacementCost(),
                 source.getRating() == null ? null : Rating.getEnum(source.getRating())
         );
-        source.getCharacters().forEach(result::addCharacter);
+        source.getActors().forEach(result::addActor);
         source.getCategories().forEach(result::addCategory);
         return result;
     }
