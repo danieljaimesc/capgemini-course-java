@@ -54,7 +54,7 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
-    @GetMapping("/categories")
+    @GetMapping()
     public List<Category> getAll() {
         return categoryService.getAll();
     }

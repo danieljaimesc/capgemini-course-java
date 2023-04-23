@@ -1,7 +1,7 @@
 package com.springsakila.inventory.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.springsakila.inventory.domain.entities.Actor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springsakila.inventory.domain.entities.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 //TODO swagger schema
 public class FilmDetailsDTO {
+    @JsonProperty("id")
     private int filmId;
     private String description;
     private int length;

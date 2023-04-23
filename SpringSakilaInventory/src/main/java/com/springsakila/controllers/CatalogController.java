@@ -28,7 +28,9 @@ public class CatalogController {
 
     @GetMapping(path = "/")
     public ResponseEntity<CatalogResources> getResources() {
-        return ResponseEntity.ok().header("Content-Type", "application/hal+json").body(new CatalogResources());
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/hal+json")
+                .body(new CatalogResources());
     }
 
     @Value
@@ -38,9 +40,9 @@ public class CatalogController {
         @Value
         public class CatalogoLinks {
             private Href self = new Href("");
-            private Href character = new Href("/api/v1/character");
+            private Href character = new Href("/api/v1/actors");
             private Href film = new Href("/api/v1/films");
-            private Href category =new Href("/api/v1/categories");
+            private Href category = new Href("/api/v1/categories");
             private Href languages = new Href("/api/v1/languages");
             private Href news = new Href("/api/v1/news");
             private Href documentation = new Href("/open-api");

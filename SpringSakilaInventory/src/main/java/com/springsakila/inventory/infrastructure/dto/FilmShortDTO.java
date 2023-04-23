@@ -10,6 +10,7 @@ import lombok.Value;
 public class FilmShortDTO {
     @JsonProperty("id")
     private int filmId;
+    @JsonProperty("title")
     private String title;
 
     public static FilmShortDTO from(Film source) {

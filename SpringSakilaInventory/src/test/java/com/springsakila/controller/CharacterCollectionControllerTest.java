@@ -1,9 +1,9 @@
 package com.springsakila.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springsakila.controllers.character.CharacterCollectionController;
-import com.springsakila.inventory.domain.services.CharacterServiceImpl;
-import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
+import com.springsakila.controllers.ActorController;
+import com.springsakila.inventory.domain.contracts.services.ActorService;
+import com.springsakila.inventory.infrastructure.dto.ActorDTO;
 import lombok.Value;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,31 +23,32 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(CharacterCollectionController.class)
+@WebMvcTest(ActorController.class)
 public class CharacterCollectionControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private CharacterServiceImpl srv;
+    private ActorService srv;
 
     private String urlTemplate;
+
     @BeforeEach
     void setUp() throws Exception {
-        urlTemplate = "/api/v1/characters";
+        urlTemplate = "/api/v1/actors";
     }
 
     @Test
     void testGetAllString() throws Exception {
-        List<CharacterDTO> list = new ArrayList<>(
+        List<ActorDTO> list = new ArrayList<>(
                 Stream.of(
                         new CharacterShortMock(1, "Pepito", "Grillo"),
                         new CharacterShortMock(2, "Carmelo", "Coton"),
                         new CharacterShortMock(3, "Capitan", "Tan")
-                ).map(item -> new CharacterDTO(item.characterId, item.firstName, item.lastName)).toList()
+                ).map(item -> new ActorDTO(item.characterId, item.firstName, item.lastName)).toList()
         );
-        when(srv.getByProjection(CharacterDTO.class)).thenReturn(list);
+        when(srv.getByProjection(ActorDTO.class)).thenReturn(list);
         mockMvc.perform(get(urlTemplate).accept(MediaType.APPLICATION_JSON))
                 .andExpectAll(
                         status().isOk(),
@@ -58,15 +59,15 @@ public class CharacterCollectionControllerTest {
 
     @Test
     void testGetAllPageable() throws Exception {
-        List<CharacterDTO> list = new ArrayList<>(
+        List<ActorDTO> list = new ArrayList<>(
                 Stream.of(
                         new CharacterShortMock(1, "Pepito", "Grillo"),
                         new CharacterShortMock(2, "Carmelo", "Coton"),
                         new CharacterShortMock(3, "Capitan", "Tan")
-                ).map(item -> new CharacterDTO(item.characterId, item.firstName, item.lastName)).toList()
+                ).map(item -> new ActorDTO(item.characterId, item.firstName, item.lastName)).toList()
         );
 
-        when(srv.getByProjection(PageRequest.of(0, 20), CharacterDTO.class))
+        when(srv.getByProjection(PageRequest.of(0, 20), ActorDTO.class))
                 .thenReturn(new PageImpl<>(list));
         mockMvc.perform(get(urlTemplate).queryParam("page", "0"))
                 .andExpectAll(

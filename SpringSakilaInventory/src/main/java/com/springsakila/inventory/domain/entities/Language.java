@@ -2,6 +2,7 @@ package com.springsakila.inventory.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springsakila.inventory.domain.core.entities.EntityBase;
 import jakarta.persistence.*;
 
@@ -25,6 +26,7 @@ public class Language extends EntityBase<Language> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "language_id", unique = true, nullable = false)
+    @JsonProperty("id")
     private int languageId;
 
     @Column(name = "last_update", insertable = false, updatable = false, nullable = false)

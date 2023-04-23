@@ -2,9 +2,9 @@ package com.springsakila.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springsakila.controllers.ActorController;
-import com.springsakila.inventory.domain.contracts.services.CharacterService;
-import com.springsakila.inventory.domain.entities.Character;
-import com.springsakila.inventory.infrastructure.dto.CharacterDTO;
+import com.springsakila.inventory.domain.contracts.services.ActorService;
+import com.springsakila.inventory.domain.entities.Actor;
+import com.springsakila.inventory.infrastructure.dto.ActorDTO;
 import lombok.Value;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class ActorControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private CharacterService srv;
+    private ActorService srv;
 
     private String urlTemplate;
 
@@ -42,7 +42,7 @@ public class ActorControllerTest {
     @Test
     void testGetOne() throws Exception {
         int id = 1;
-        var character = new Character(id, "Pepito", "Grillo");
+        var character = new Actor(id, "Pepito", "Grillo");
 
         when(srv.getOne(id)).thenReturn(Optional.of(character));
         mockMvc.perform(get(urlTemplate + "/{id}", id))
@@ -57,23 +57,19 @@ public class ActorControllerTest {
     void testGetOne404() throws Exception {
         int id = 1;
         when(srv.getOne(id)).thenReturn(Optional.empty());
-        mockMvc.perform(get(urlTemplate + "/{id}", id))
-                .andExpect(status().isNotFound())
+        mockMvc.perform(get(urlTemplate + "/{id}", id)).andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.title").value("Not Found"))
                 .andDo(print());
     }
 
     @Test
     void testCreate() throws Exception {
-        var ele = new Character(1, "PEPITO", "GRILLO");
+        var ele = new Actor(1, "PEPITO", "GRILLO");
         when(srv.add(ele)).thenReturn(ele);
         mockMvc.perform(post(urlTemplate)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CharacterDTO.from(ele)))
-                )
-                .andExpect(status().isCreated())
-                .andDo(print())
-        ;
+                        .content(objectMapper.writeValueAsString(ActorDTO.from(ele))))
+                .andExpect(status().isCreated()).andDo(print());
     }
 
     @Value
