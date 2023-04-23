@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 interface Props {
-  menu: Array<{ text: string; url: string; component: JSX.Element }>;
+  menu: Array<{ text: string; url: string }>;
 }
 function Menu({ menu }: Props) {
   return (
