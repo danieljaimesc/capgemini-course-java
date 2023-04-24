@@ -17,7 +17,7 @@ export interface FilmDTO {
   actorList?: Array<number | ActorDTO>;
   categoryList?: Array<number | CategoryDTO>;
   language?: LanguageDTO | number;
-  languageVO?: LanguageDTO;
+  languageVO?: LanguageDTO | number;
 }
 const API_FILMS_ENDPOINT =
   (import.meta.env.VITE_API_BASE_URL || "http://localhost:8001") +

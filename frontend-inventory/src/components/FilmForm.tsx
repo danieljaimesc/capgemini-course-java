@@ -18,8 +18,7 @@ import { LanguageDTO, getLanguageList } from "../pages/Languages";
 function FilmForm(props: {
   filmDTO?: FilmDTO;
   open: boolean;
-  handleClickOpen?: () => void;
-  handleClose?: () => void;
+  handleClose: () => void;
 }) {
   const { open, handleClose, filmDTO } = props;
   const [languageList, setLanguageList] = useState<LanguageDTO[]>();
@@ -27,6 +26,8 @@ function FilmForm(props: {
   useEffect(() => {
     getLanguageList().then((respJson) => setLanguageList(respJson));
   }, []);
+
+  const [film, setFilm] = useState<FilmDTO>();
 
   const [title, setTitle] = useState(
     filmDTO && filmDTO.title ? filmDTO.title : undefined
@@ -104,8 +105,45 @@ function FilmForm(props: {
     setReplacementCost(event.target.value as unknown as number);
   };
 
+  const handleChangeLanguage = (event: SelectChangeEvent<number>) => {
+    setLanguage(
+      languageList?.find(({ id }) => id === (event.target.value as number))
+    );
+  };
+
+  const handleChangeLanguageVO = (event: SelectChangeEvent<number>) => {
+    setLanguageVO(
+      languageList?.find(({ id }) => id === (event.target.value as number))
+    );
+  };
+
+  const cleanForm = () => {
+    setTitle(filmDTO && filmDTO.title ? filmDTO.title : undefined);
+    setDescription(
+      filmDTO && filmDTO.description ? filmDTO.description : undefined
+    );
+    setRating(filmDTO && filmDTO.rating ? filmDTO.rating : undefined);
+    setReleaseYear(
+      filmDTO && filmDTO.releaseYear ? filmDTO.releaseYear : undefined
+    );
+    setRentalDuration(
+      filmDTO && filmDTO.rentalDuration ? filmDTO.rentalDuration : undefined
+    );
+    setRentalRate(
+      filmDTO && filmDTO.rentalRate ? filmDTO.rentalRate : undefined
+    );
+    setReplacementCost(
+      filmDTO && filmDTO.replacementCost ? filmDTO.replacementCost : undefined
+    );
+    setLanguage(filmDTO && filmDTO.language ? filmDTO.language : undefined);
+    setLanguageVO(
+      filmDTO && filmDTO.languageVO ? filmDTO.languageVO : undefined
+    );
+    handleClose();
+  };
+
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={open} onClose={cleanForm}>
       <DialogTitle>Film Form</DialogTitle>
       <DialogContent>
         <Grid container spacing={1}>
@@ -184,6 +222,7 @@ function FilmForm(props: {
               defaultValue={replacementCost}
               type="number"
               variant="filled"
+              onChange={handleChangeReplacementCost}
             />
           </Grid>
           <Grid xs={4} item>
@@ -192,8 +231,11 @@ function FilmForm(props: {
               <Select
                 labelId="language-select-label"
                 id="language-select"
-                defaultValue={language ? (language as LanguageDTO).id : ""}
+                defaultValue={
+                  language ? (language as LanguageDTO).id : undefined
+                }
                 label="Language"
+                onChange={handleChangeLanguage}
               >
                 {languageList?.map((item) => (
                   <MenuItem value={item.id}>{item.name}</MenuItem>
@@ -209,8 +251,11 @@ function FilmForm(props: {
               <Select
                 labelId="languageVO-select-label"
                 id="languageVO-select"
-                defaultValue={languageVO ? (languageVO as LanguageDTO).id : ""}
+                defaultValue={
+                  languageVO ? (languageVO as LanguageDTO).id : undefined
+                }
                 label="Language (VOSE)"
+                onChange={handleChangeLanguageVO}
               >
                 {languageList?.map((item) => (
                   <MenuItem value={item.id}>{item.name}</MenuItem>
@@ -221,14 +266,10 @@ function FilmForm(props: {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="contained"
-          endIcon={<SendIcon />}
-          onClick={handleClose}
-        >
+        <Button variant="contained" endIcon={<SendIcon />} onClick={cleanForm}>
           {filmDTO ? "Edit" : "Create"}
         </Button>
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={cleanForm}>Close</Button>
       </DialogActions>
     </Dialog>
   );
