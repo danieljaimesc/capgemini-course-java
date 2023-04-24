@@ -54,7 +54,6 @@ function ActorForm(props: {
               label="First Name"
               type="text"
               defaultValue={firstName ? firstName : undefined}
-              rows={2}
               onChange={handleChangeFirstName}
               variant="filled"
             />
@@ -66,7 +65,6 @@ function ActorForm(props: {
               label="Last Name"
               type="text"
               defaultValue={lastName ? lastName : undefined}
-              rows={2}
               onChange={handleChangeLastName}
               variant="filled"
             />

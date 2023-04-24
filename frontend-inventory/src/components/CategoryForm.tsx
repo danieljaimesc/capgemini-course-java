@@ -1,10 +1,10 @@
 import { useState, ChangeEvent } from "react";
 import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import { CategoryDTO } from "../pages/Categories";
@@ -39,10 +39,9 @@ function CategoryForm(props: {
             <TextField
               required
               margin="dense"
-              label="First Name"
+              label="Name"
               type="text"
               defaultValue={name ? name : undefined}
-              rows={2}
               onChange={handleChangeName}
               variant="filled"
             />
@@ -50,8 +49,10 @@ function CategoryForm(props: {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={cleanForm}>Cancel</Button>
-        <Button onClick={cleanForm}>Editar</Button>
+      <Button onClick={cleanForm}>Close</Button>
+        <Button variant="contained" endIcon={<SendIcon />} onClick={cleanForm}>
+          {category ? "Edit" : "Create"}
+        </Button>
       </DialogActions>
     </Dialog>
   );

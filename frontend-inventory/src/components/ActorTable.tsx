@@ -119,7 +119,7 @@ function ActorRow(props: { row: ActorDTO; index: number }) {
           </TableCell>
         </TableRow>
       </Fragment>
-      <ActorForm open={openForm} actor={row} handleClose={handleClose} />
+      <ActorForm open={openForm} actor={row} actorIndex={index} handleClose={handleClose} />
     </>
   );
 }
