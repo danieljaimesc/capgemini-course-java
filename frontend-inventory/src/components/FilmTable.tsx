@@ -3,6 +3,7 @@ import { FilmDTO } from "../pages/Films";
 import Collapse from "@mui/material/Collapse";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -32,6 +33,15 @@ interface Props {
 }
 
 function FilmTable({ filmList, getFilmDetailsById, pageDetails }: Props) {
+  const [openForm, setOpenForm] = useState<boolean>(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClose = () => {
+    setOpenForm(false);
+  };
   return (
     <>
       <Stack alignItems="center">
@@ -49,6 +59,17 @@ function FilmTable({ filmList, getFilmDetailsById, pageDetails }: Props) {
       >
         <Table aria-label="collapsible table">
           <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={5}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleClickOpen}
+                >
+                  Create
+                </Button>
+              </TableCell>
+            </TableRow>
             <TableRow>
               <TableCell />
               <TableCell>ID</TableCell>
@@ -70,6 +91,7 @@ function FilmTable({ filmList, getFilmDetailsById, pageDetails }: Props) {
         </Table>
         <Pagination pageDetails={pageDetails} />
       </TableContainer>
+      <FilmForm open={openForm} handleClose={handleClose} />
     </>
   );
 }

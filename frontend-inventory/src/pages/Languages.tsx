@@ -6,11 +6,15 @@ export interface LanguageDTO {
   name: string;
 }
 
-export function Languages() {
-  const API_LANGUAGES_ENDPOINT =
-    (import.meta.env.VITE_API_BASE_URL || "http://localhost:8001") +
-    "/api/v1/languages";
+const API_LANGUAGES_ENDPOINT =
+  (import.meta.env.VITE_API_BASE_URL || "http://localhost:8001") +
+  "/api/v1/languages";
 
+export const getLanguageList = (): Promise<LanguageDTO[]> => {
+  return fetch(API_LANGUAGES_ENDPOINT).then((response) => response.json());
+};
+
+export function Languages() {
   const [languageList, setLanguageList] = useState<LanguageDTO[]>([]);
   useEffect(() => {
     console.log("Get Languages List" + " " + API_LANGUAGES_ENDPOINT);
