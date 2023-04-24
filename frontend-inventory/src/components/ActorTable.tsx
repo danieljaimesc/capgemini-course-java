@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Paper from "@mui/material/Paper";
@@ -12,6 +13,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import { ActorDTO } from "../pages/Actors";
 import Pagination, { PageDetails } from "../components/Pagination";
+import ActorForm from "./ActorForm";
 
 interface Props {
   actorList: ActorDTO[];
@@ -21,6 +23,16 @@ interface Props {
 }
 
 function ActorTable({ actorList, pageDetails }: Props) {
+  const [openForm, setOpenForm] = useState<boolean>(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClose = () => {
+    setOpenForm(false);
+  };
+
   return (
     <>
       <Stack alignItems="center">
@@ -39,6 +51,17 @@ function ActorTable({ actorList, pageDetails }: Props) {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell align="center" colSpan={5}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleClickOpen}
+                >
+                  Create
+                </Button>
+              </TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>
@@ -54,36 +77,50 @@ function ActorTable({ actorList, pageDetails }: Props) {
         </Table>
         <Pagination pageDetails={pageDetails} />
       </TableContainer>
+      <ActorForm open={openForm} handleClose={handleClose} />
     </>
   );
 }
 
 function ActorRow(props: { row: ActorDTO; index: number }) {
   const { row, index } = props;
+  const [openForm, setOpenForm] = useState<boolean>(false);
+
+  const handleClickOpen = () => {
+    setOpenForm(true);
+  };
+
+  const handleClose = () => {
+    setOpenForm(false);
+  };
+
   return (
-    <Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell component="th" scope="row">
-          {row.id}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.firstName}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.lastName}
-        </TableCell>
-        <TableCell>
-          <IconButton>
-            <EditIcon />
-          </IconButton>
-        </TableCell>
-        <TableCell>
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </TableCell>
-      </TableRow>
-    </Fragment>
+    <>
+      <Fragment>
+        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+          <TableCell component="th" scope="row">
+            {row.id}
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.firstName}
+          </TableCell>
+          <TableCell component="th" scope="row">
+            {row.lastName}
+          </TableCell>
+          <TableCell>
+            <IconButton onClick={handleClickOpen}>
+              <EditIcon />
+            </IconButton>
+          </TableCell>
+          <TableCell>
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      </Fragment>
+      <ActorForm open={openForm} actor={row} handleClose={handleClose} />
+    </>
   );
 }
 

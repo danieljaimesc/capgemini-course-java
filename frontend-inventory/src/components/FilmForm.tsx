@@ -6,7 +6,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -18,6 +17,7 @@ import { LanguageDTO, getLanguageList } from "../pages/Languages";
 function FilmForm(props: {
   filmDTO?: FilmDTO;
   open: boolean;
+  filmIndex?: number;
   handleClose: () => void;
 }) {
   const { open, handleClose, filmDTO } = props;
@@ -27,7 +27,7 @@ function FilmForm(props: {
     getLanguageList().then((respJson) => setLanguageList(respJson));
   }, []);
 
-  const [film, setFilm] = useState<FilmDTO>();
+  const [filmToSend, setFilmToSend] = useState<FilmDTO>();
 
   const [title, setTitle] = useState(
     filmDTO && filmDTO.title ? filmDTO.title : undefined
@@ -266,10 +266,10 @@ function FilmForm(props: {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Button onClick={cleanForm}>Close</Button>
         <Button variant="contained" endIcon={<SendIcon />} onClick={cleanForm}>
           {filmDTO ? "Edit" : "Create"}
         </Button>
-        <Button onClick={cleanForm}>Close</Button>
       </DialogActions>
     </Dialog>
   );
