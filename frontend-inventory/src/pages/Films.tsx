@@ -3,6 +3,7 @@ import FilmTable from "../components/FilmTable";
 import { ActorDTO } from "./Actors";
 import { CategoryDTO } from "./Categories";
 import { LanguageDTO } from "./Languages";
+import { PageDetails } from "../components/Pagination";
 
 export interface FilmDTO {
   id: number;
@@ -13,29 +14,14 @@ export interface FilmDTO {
   rentalDuration?: number;
   rentalRate?: number;
   replacementCost?: number;
-  actorList?: ActorDTO[];
-  categoryList?: CategoryDTO[];
-  language?: LanguageDTO;
+  actorList?: Array<number | ActorDTO>;
+  categoryList?: Array<number | CategoryDTO>;
+  language?: LanguageDTO | number;
   languageVO?: LanguageDTO;
 }
 const API_FILMS_ENDPOINT =
   (import.meta.env.VITE_API_BASE_URL || "http://localhost:8001") +
   "/api/v1/films";
-
-export interface PageDetails {
-  pageNumber: {
-    value: number;
-    set: React.Dispatch<React.SetStateAction<number>>;
-  };
-  pageSize: {
-    value: number;
-    set: React.Dispatch<React.SetStateAction<number>>;
-  };
-  totalElements: {
-    value: number;
-    set: React.Dispatch<React.SetStateAction<number>>;
-  };
-}
 
 export function Films() {
   const [filmList, setFilmList] = useState<FilmDTO[]>([]);
@@ -70,6 +56,7 @@ export function Films() {
       set: setTotalElements,
     },
   };
+
   const getFilmDetailsById = useCallback(
     async (filmId: number, filmIndex: number) => {
       const filmDetailsDTO: FilmDTO = await fetch(

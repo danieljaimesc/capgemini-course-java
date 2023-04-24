@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CategoryTable from "../components/CategoryTable";
 
 export interface CategoryDTO {
   id: number;
@@ -20,10 +21,7 @@ export function Categories() {
 
   return (
     <>
-      <div>Categories</div>
-      {categoryList.map((item) => (
-        <div id={String(item.id)}>{item.id + " " + item.name}</div>
-      ))}
+      <CategoryTable categoryList={categoryList} />
     </>
   );
 }

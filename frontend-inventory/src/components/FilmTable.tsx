@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { FilmDTO, PageDetails } from "../pages/Films";
+import { FilmDTO } from "../pages/Films";
 import Collapse from "@mui/material/Collapse";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TableContainer from "@mui/material/TableContainer";
-import TablePagination from "@mui/material/TablePagination";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 import TableHead from "@mui/material/TableHead";
@@ -18,25 +17,30 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import FilmEdit from "./FilmEdit";
+import FilmForm from "./FilmForm";
+import { ActorDTO } from "../pages/Actors";
+import { CategoryDTO } from "../pages/Categories";
+import { LanguageDTO } from "../pages/Languages";
+import Pagination, { PageDetails } from "../components/Pagination";
 
 interface Props {
   filmList: FilmDTO[];
   pageDetails: PageDetails;
   getFilmDetailsById: (filmId: number, filmIndex: number) => Promise<void>;
   deleteFilmById?: (filmId: number) => Promise<void>;
-  editFilmById?: (filmId: number) => Promise<void>;
+  editFilmById?: (film: FilmDTO, filmIndex: number) => Promise<void>;
 }
 
 function FilmTable({ filmList, getFilmDetailsById, pageDetails }: Props) {
   return (
     <>
-      <Stack alignItems="center"></Stack>
-      <h1>Films</h1>
+      <Stack alignItems="center">
+        <h1>Films</h1>
+      </Stack>
       <TableContainer
         sx={{
-          width: "100%",
-          maxWidth: "60%",
+          width: "55%",
+          maxWidth: 600,
           marginLeft: "auto",
           marginRight: "auto",
           bgcolor: "background.paper",
@@ -54,16 +58,17 @@ function FilmTable({ filmList, getFilmDetailsById, pageDetails }: Props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filmList.map((row, index) => (
+            {filmList.map((item, index) => (
               <FilmRow
                 key={index}
-                row={row}
+                row={item}
                 index={index}
-                edit={getFilmDetailsById}
+                getDetails={getFilmDetailsById}
               />
             ))}
           </TableBody>
         </Table>
+        <Pagination pageDetails={pageDetails} />
       </TableContainer>
     </>
   );
@@ -74,31 +79,20 @@ export default FilmTable;
 function FilmRow(props: {
   row: FilmDTO;
   index: number;
-  edit: (filmId: number, filmIndex: number) => Promise<void>;
+  getDetails: (filmId: number, filmIndex: number) => Promise<void>;
 }) {
-  const { row, index, edit } = props;
+  const { row, index, getDetails } = props;
   const [expand, setExpand] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [openForm, setOpenForm] = useState<boolean>(false);
   const toggleAccordion = () => {
     setExpand(!expand);
   };
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    //setPageNumber(newPage);
-  };
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    //setPageSize(parseInt(event.target.value, 10));
-    //setPageNumber(0);
-  };
+
   const handleClickOpen = async () => {
     setOpenForm(true);
     if (loading) {
-      await edit(row.id, index);
+      await getDetails(row.id, index);
       setLoading(false);
     }
   };
@@ -118,7 +112,7 @@ function FilmRow(props: {
               onClick={async () => {
                 toggleAccordion();
                 if (loading) {
-                  await edit(row.id, index);
+                  await getDetails(row.id, index);
                   await new Promise((r) => setTimeout(r, 700));
                   setLoading(false);
                 }
@@ -173,7 +167,7 @@ function FilmRow(props: {
                         <TableCell>
                           {row.categoryList
                             ? row.categoryList.map((item) => {
-                                return item.name + ", ";
+                                return (item as CategoryDTO).name + ", ";
                               })
                             : "Any categories"}
                         </TableCell>
@@ -184,7 +178,10 @@ function FilmRow(props: {
                           {row.actorList
                             ? row.actorList.map((item) => {
                                 return (
-                                  item.firstName + " " + item.lastName + ", "
+                                  (item as ActorDTO).firstName +
+                                  " " +
+                                  (item as ActorDTO).lastName +
+                                  ", "
                                 );
                               })
                             : "Any actors"}
@@ -208,10 +205,14 @@ function FilmRow(props: {
                         <TableCell>{row.rentalDuration}</TableCell>
                         <TableCell>{row.replacementCost}</TableCell>
                         <TableCell>
-                          {row.language ? row.language.name : ""}
+                          {row.language
+                            ? (row.language as LanguageDTO).name
+                            : ""}
                         </TableCell>
                         <TableCell>
-                          {row.languageVO ? row.languageVO.name : ""}
+                          {row.languageVO
+                            ? (row.languageVO as LanguageDTO).name
+                            : ""}
                         </TableCell>
                       </TableBody>
                     </Table>
@@ -223,7 +224,7 @@ function FilmRow(props: {
         </TableRow>
       </Fragment>
       {!loading ? (
-        <FilmEdit filmDTO={row} open={openForm} handleClose={handleClose} />
+        <FilmForm filmDTO={row} open={openForm} handleClose={handleClose} />
       ) : (
         ""
       )}

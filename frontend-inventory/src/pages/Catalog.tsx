@@ -3,6 +3,8 @@ import { ActorDTO } from "./Actors";
 import { FilmDTO } from "./Films";
 import { LanguageDTO } from "./Languages";
 import { CategoryDTO } from "./Categories";
+import { PageDetails } from "../components/Pagination";
+
 
 interface CatalogDTO {
   filmList: FilmDTO[];

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import LanguageTable from "../components/LanguageTable";
 
 export interface LanguageDTO {
   id: number;
@@ -19,10 +20,7 @@ export function Languages() {
   }, []);
   return (
     <>
-      <div>Languages</div>
-      {languageList.map((item) => (
-        <div id={String(item.id)}>{item.id + " " + item.name}</div>
-      ))}
+      <LanguageTable languageList={languageList} />
     </>
   );
 }

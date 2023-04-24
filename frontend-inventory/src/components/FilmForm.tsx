@@ -11,7 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-function FilmEdit(props: {
+function FilmForm(props: {
   filmDTO: FilmDTO;
   open: boolean;
   handleClickOpen?: () => void;
@@ -22,10 +22,9 @@ function FilmEdit(props: {
   const handleChange = (event: SelectChangeEvent) => {
     setRating(event.target.value as string);
   };
-  console.log(filmDTO.rating);
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Edit Film</DialogTitle>
+      <DialogTitle>Film Form</DialogTitle>
       <DialogContent>
         <TextField
           margin="dense"
@@ -69,4 +68,4 @@ function FilmEdit(props: {
   );
 }
 
-export default FilmEdit;
+export default FilmForm;
