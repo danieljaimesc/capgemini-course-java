@@ -10,12 +10,12 @@ import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
 import io.swagger.v3.oas.annotations.Parameter;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +36,8 @@ public class LanguageController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Language postCreate(@Valid @RequestBody Language language) throws InvalidDataException, BadRequestException,
-            DuplicateKeyException {
+    public Language postCreate(@Valid @RequestBody Language language) throws InvalidDataException,
+            BadRequestException, DuplicateKeyException {
         return languageService.add(language);
     }
 
@@ -60,8 +60,7 @@ public class LanguageController {
 
     @GetMapping("/{id}/films")
     @Transactional
-    public Page<FilmShortDTO> getFilmShortList(Pageable pageable, @RequestParam(defaultValue = "short") String mode,
-                                               @PathVariable int id) throws NotFoundException {
+    public Page<FilmShortDTO> getFilmShortList(Pageable pageable, @PathVariable int id) throws NotFoundException {
         Optional<Language> language = languageService.getOne(id);
         if (language.isEmpty()) throw new NotFoundException();
         List<FilmShortDTO> filmShortList = language.get().getFilms().stream().map(FilmShortDTO::from).toList();
@@ -70,9 +69,7 @@ public class LanguageController {
 
     @GetMapping(path = "/{id}/films", params = "mode=details")
     @Transactional
-    public Page<FilmDetailsDTO> getFilmDetailsList(@Parameter(hidden = true) Pageable pageable,
-                                                   @RequestParam(defaultValue = "short") String mode,
-                                                   @PathVariable int id) throws NotFoundException {
+    public Page<FilmDetailsDTO> getFilmDetailsList(@Parameter(hidden = true) Pageable pageable, @PathVariable int id) throws NotFoundException {
         Optional<Language> language = languageService.getOne(id);
         if (language.isEmpty()) throw new NotFoundException();
         List<FilmDetailsDTO> filmDetailsList = language.get().getFilms().stream().map(FilmDetailsDTO::from).toList();

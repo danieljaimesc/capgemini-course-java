@@ -2,7 +2,9 @@ package com.springsakila.inventory.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.springsakila.inventory.domain.entities.*;
+import com.springsakila.inventory.domain.entities.Film;
+import com.springsakila.inventory.domain.entities.Language;
+import com.springsakila.inventory.domain.entities.Rating;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -37,8 +39,8 @@ public class FilmDetailsDTO {
     @NotNull
     private Language language;
     private Language languageVO;
-    private List<ActorDTO> actorList = new ArrayList<>();
-    private List<Category> categoryList = new ArrayList<>();
+    private List<Object> actorList = new ArrayList<>();
+    private List<Object> categoryList = new ArrayList<>();
 
     public static FilmDetailsDTO from(Film source) {
         return new FilmDetailsDTO(
@@ -53,8 +55,8 @@ public class FilmDetailsDTO {
                 source.getTitle(),
                 source.getLanguage() == null ? null : source.getLanguage(),
                 source.getLanguageVO() == null ? null : source.getLanguageVO(),
-                source.getActors().stream().map(ActorDTO::from).toList(),
-                source.getCategories()
+                new ArrayList<>(source.getActors().stream().map(ActorDTO::from).toList()),
+                new ArrayList<>(source.getCategories())
         );
     }
 
@@ -72,8 +74,8 @@ public class FilmDetailsDTO {
                 source.getReplacementCost(),
                 source.getRating() == null ? null : Rating.getEnum(source.getRating())
         );
-        source.getActorList().forEach((item) -> result.addActor(item.getActorId()));
-        source.getCategoryList().forEach(result::addCategory);
+        source.getActorList().forEach(item -> result.addActor((Integer) item));
+        source.getCategoryList().forEach(item -> result.addCategory((Integer) item));
         return result;
     }
 

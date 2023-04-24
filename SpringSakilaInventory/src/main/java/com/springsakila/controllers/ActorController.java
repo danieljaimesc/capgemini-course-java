@@ -3,18 +3,20 @@ package com.springsakila.controllers;
 import com.springsakila.inventory.domain.contracts.services.ActorService;
 import com.springsakila.inventory.domain.entities.Actor;
 import com.springsakila.inventory.infrastructure.dto.ActorDTO;
+import com.springsakila.inventory.infrastructure.dto.FilmDetailsDTO;
 import com.springsakila.inventory.infrastructure.dto.FilmShortDTO;
+import com.springsakila.inventory.shared.PaginationConverter;
 import com.springsakila.inventory.shared.exceptions.BadRequestException;
 import com.springsakila.inventory.shared.exceptions.DuplicateKeyException;
 import com.springsakila.inventory.shared.exceptions.InvalidDataException;
 import com.springsakila.inventory.shared.exceptions.NotFoundException;
-import jakarta.transaction.Transactional;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,21 +56,28 @@ public class ActorController {
     }
 
     @GetMapping
-    public List<ActorDTO> getAll(@RequestParam(required = false) String sort) {
-        System.out.println("HOLA");
-        return sort != null ? (List<ActorDTO>) characterService.getByProjection(Sort.by(sort),
-                ActorDTO.class) : characterService.getByProjection(ActorDTO.class);
-    }
-
-    @GetMapping(params = "page")
+    @Transactional
     public Page<ActorDTO> getAll(Pageable pageable) {
         return characterService.getByProjection(pageable, ActorDTO.class);
     }
 
     @GetMapping("/{id}/films")
-    public List<FilmShortDTO> getFilmList(@PathVariable int id) throws NotFoundException {
+    @Transactional
+    public Page<FilmShortDTO> getFilmShortList(@Parameter(hidden = true) Pageable pageable, @PathVariable int id) throws NotFoundException {
         Optional<Actor> character = characterService.getOne(id);
         if (character.isEmpty()) throw new NotFoundException();
-        return character.get().getFilmActors().stream().map(item -> FilmShortDTO.from(item.getFilm())).toList();
+        List<FilmShortDTO> filmShortList =
+                character.get().getFilmActors().stream().map(item -> FilmShortDTO.from(item.getFilm())).toList();
+        return PaginationConverter.paginateList(pageable, filmShortList);
+    }
+
+    @GetMapping(path = "/{id}/films", params = "mode=details")
+    @Transactional
+    public Page<FilmDetailsDTO> getFilmDetailsList(@Parameter(hidden = true) Pageable pageable, @PathVariable int id) throws NotFoundException {
+        Optional<Actor> character = characterService.getOne(id);
+        if (character.isEmpty()) throw new NotFoundException();
+        List<FilmDetailsDTO> filmShortList =
+                character.get().getFilmActors().stream().map(item -> FilmDetailsDTO.from(item.getFilm())).toList();
+        return PaginationConverter.paginateList(pageable, filmShortList);
     }
 }
