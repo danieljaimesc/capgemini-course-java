@@ -35,10 +35,10 @@ public class FilmDetailsDTO {
     @Size(min = 2, max = 128)
     private String title;
     @NotNull
-    private Integer languageId;
-    private Integer languageVOId;
-    private List<Integer> actors = new ArrayList<>();
-    private List<Integer> categories = new ArrayList<>();
+    private Language language;
+    private Language languageVO;
+    private List<ActorDTO> actorList = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
 
     public static FilmDetailsDTO from(Film source) {
         return new FilmDetailsDTO(
@@ -51,10 +51,10 @@ public class FilmDetailsDTO {
                 source.getRentalRate(),
                 source.getReplacementCost(),
                 source.getTitle(),
-                source.getLanguage() == null ? null : source.getLanguage().getLanguageId(),
-                source.getLanguageVO() == null ? null : source.getLanguageVO().getLanguageId(),
-                source.getActors().stream().map(Actor::getActorId).toList(),
-                source.getCategories().stream().map(Category::getCategoryId).toList()
+                source.getLanguage() == null ? null : source.getLanguage(),
+                source.getLanguageVO() == null ? null : source.getLanguageVO(),
+                source.getActors().stream().map(ActorDTO::from).toList(),
+                source.getCategories()
         );
     }
 
@@ -64,16 +64,16 @@ public class FilmDetailsDTO {
                 source.getTitle(),
                 source.getDescription(),
                 source.getReleaseYear(),
-                source.getLanguageId() == null ? null : new Language(source.getLanguageId()),
-                source.getLanguageVOId() == null ? null : new Language(source.getLanguageVOId()),
+                source.getLanguage() == null ? null : source.getLanguage(),
+                source.getLanguageVO() == null ? null : source.getLanguageVO(),
                 source.getRentalDuration(),
                 source.getRentalRate(),
                 source.getLength(),
                 source.getReplacementCost(),
                 source.getRating() == null ? null : Rating.getEnum(source.getRating())
         );
-        source.getActors().forEach(result::addActor);
-        source.getCategories().forEach(result::addCategory);
+        source.getActorList().forEach((item) -> result.addActor(item.getActorId()));
+        source.getCategoryList().forEach(result::addCategory);
         return result;
     }
 

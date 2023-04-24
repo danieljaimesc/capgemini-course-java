@@ -70,7 +70,7 @@ public class FilmController {
         return PaginationConverter.paginateList(pageable, filmDetailsDTOList);
     }
 
-    @GetMapping("/{id}/characters")
+    @GetMapping("/{id}/actors")
     public List<ActorDTO> getActorList(@PathVariable int id) throws NotFoundException {
         Optional<Film> film = filmService.getOne(id);
         if (film.isEmpty()) throw new NotFoundException();
